@@ -3,7 +3,7 @@
 ## ENDPOINT(S) MODIFICADO(S)
     - GET /booking - Por defecto ahora traera las reservas del dia, no devolvera error.
 
-## 📦 Librerías Externas
+## Librerías Externas
 
 ### **react-router-dom** 
 Librería esencial para el manejo de rutas y navegación en la aplicación.

@@ -33,7 +33,7 @@ export const courtService = {
 
   // Obtener todas las canchas - GET /courts
   getAllCourts: async () => {
-    const response = await api.get('/courts');
+    const response = await api.get('/court');
     return response.data;
   }
   

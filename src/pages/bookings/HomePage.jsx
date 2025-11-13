@@ -1,62 +1,93 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { generateTimeSlots, formatDate, getToday } from '../../utils/helpers';
 import './HomePage.css';
+import { courtService } from '/src/services/courtService.jsx'; 
 
 const HomePage = () => {
   const timeSlots = generateTimeSlots();
-  
-  // Estado para la fecha seleccionada (inicializada con la fecha de hoy)
   const [selectedDate, setSelectedDate] = useState(getToday());
-  
-  // Función para formatear fecha a objeto Date para mostrar
-  const getDateObject = (dateString) => {
-    return new Date(dateString + 'T00:00:00');
-  };
-  
-  // Función para ir al día anterior
+  const [courts, setCourts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const getDateObject = (dateString) => new Date(dateString + 'T00:00:00');
+
   const goToPreviousDay = () => { 
     const date = getDateObject(selectedDate);
     date.setDate(date.getDate() - 1);
-    const newDate = formatDateForInput(date);
-    setSelectedDate(newDate);
+    setSelectedDate(formatDateForInput(date));
   };
-  
-  // Función para ir al día siguiente
+
   const goToNextDay = () => {
     const date = getDateObject(selectedDate);
     date.setDate(date.getDate() + 1);
-    const newDate = formatDateForInput(date);
-    setSelectedDate(newDate);
+    setSelectedDate(formatDateForInput(date));
   };
-  
-  // Función para ir a hoy
-  const goToToday = () => {
-    setSelectedDate(getToday());
-  };
-  
-  // Función para formatear fecha al formato YYYY-MM-DD para el input
+
+  const goToToday = () => setSelectedDate(getToday());
+
   const formatDateForInput = (date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
-  
-  // Datos de ejemplo para la estructura (tú implementarás la lógica)
-  const courts = [
-    { id: 1, name: 'Cancha 1' },
-    { id: 2, name: 'Cancha 2' },
-    { id: 3, name: 'Cancha 3' }
-  ];
+
+  useEffect(() => {
+    const fetchCourts = async () => {
+      try {
+        const data = await courtService.getAllCourts();
+        setCourts(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error('Error al cargar canchas:', error);
+        setCourts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCourts();
+  }, []);
+
+  // 🆕 NUEVO useEffect para sincronizar los scrolls
+  useEffect(() => {
+    const top = document.querySelector('.scroll-top');
+    const bottom = document.querySelector('.scroll-bottom');
+    const middle = document.querySelector('#scrollContainer');
+
+    if (!top || !bottom || !middle) return;
+
+    const syncScroll = (source, targets) => {
+      const handler = () => {
+        targets.forEach(t => {
+          if (t.scrollLeft !== source.scrollLeft) {
+            t.scrollLeft = source.scrollLeft;
+          }
+        });
+      };
+      source.addEventListener('scroll', handler);
+      return () => source.removeEventListener('scroll', handler);
+    };
+
+    const cleanTop = syncScroll(top, [middle, bottom]);
+    const cleanMiddle = syncScroll(middle, [top, bottom]);
+    const cleanBottom = syncScroll(bottom, [middle, top]);
+
+    // cleanup: elimina solo los listeners
+    return () => {
+      cleanTop();
+      cleanMiddle();
+      cleanBottom();
+    };
+  }, []);
+
+  if (loading) {
+    return <div className="home-page"><p>Cargando canchas...</p></div>;
+  }
 
   return (
     <div className="home-page">
       <div className="bookings-header">
-        <h1>
-          Reservas del día - {formatDate(getDateObject(selectedDate))} 📅
-        </h1>
-        
+        <h1>Reservas del día - {formatDate(getDateObject(selectedDate))} 📅</h1>
         <div className="date-navigation">
           <button onClick={goToPreviousDay} className="nav-button">← Día anterior</button>
           <button onClick={goToToday} className="nav-button">Hoy</button>
@@ -68,7 +99,6 @@ const HomePage = () => {
             onChange={(e) => setSelectedDate(e.target.value)}
           />
         </div>
-
         <div className="create-booking-link">
           <Link to="/booking/new" className="btn-create-booking">
             Crear nueva reserva
@@ -76,34 +106,63 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="bookings-grid-container">
-        <table className="bookings-grid">
-          <thead>
-            <tr>
-              <th className="time-column">Hora</th>
-              {courts.map(court => (
-                <th key={court.id} className="court-column">
-                  {court.name}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {timeSlots.map(timeSlot => (
-              <tr key={timeSlot}>
-                <td className="time-cell">{timeSlot}</td>
+      {/* 🧩 Contenedor con scrolls sincronizados */}
+      <div className="bookings-grid-wrapper">
+        {/* Scroll superior: solo barra de scroll */}
+        <div className="scroll-top" style={{ overflowX: 'auto', height: '20px' }}>
+          <div style={{ minWidth: '100%' }}>
+            <table style={{ width: '100%' }}>
+              <thead>
+                <tr>
+                  <th style={{ width: '100px' }}></th>
+                  {courts.map(court => (
+                    <th key={court.id} style={{ width: '150px' }}></th>
+                  ))}
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+
+        {/* Tabla principal */}
+        <div className="bookings-grid-container" id="scrollContainer" style={{ overflowX: 'auto' }}>
+          <table className="bookings-grid" style={{ minWidth: '100%' }}>
+            <thead>
+              <tr>
+                <th className="time-column">Hora</th>
                 {courts.map(court => (
-                  <td
-                    key={`${timeSlot}-${court.id}`}
-                    className="booking-cell"
-                  >
-                    {/* Aquí irán los participantes de las reservas */}
-                  </td>
+                  <th key={court.id} className="court-column">{court.name}</th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {timeSlots.map(timeSlot => (
+                <tr key={timeSlot}>
+                  <td className="time-cell">{timeSlot}</td>
+                  {courts.map(court => (
+                    <td key={`${timeSlot}-${court.id}`} className="booking-cell"></td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Scroll inferior: solo barra de scroll */}
+        <div className="scroll-bottom" style={{ overflowX: 'auto', height: '20px' }}>
+          <div style={{ minWidth: '100%' }}>
+            <table style={{ width: '100%' }}>
+              <thead>
+                <tr>
+                  <th style={{ width: '100px' }}></th>
+                  {courts.map(court => (
+                    <th key={court.id} style={{ width: '150px' }}></th>
+                  ))}
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );

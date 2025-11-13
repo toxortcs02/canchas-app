@@ -205,3 +205,34 @@
     padding: 8px 10px;
   }
 }
+
+.bookings-grid-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Los scrolls superior e inferior */
+.scroll-top, .scroll-bottom {
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 16px;
+}
+
+.scroll-sync {
+  width: 2000px; /* mismo ancho aproximado que la tabla */
+  height: 1px;
+}
+
+/* Contenedor principal de la tabla */
+.bookings-grid-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 0;
+}
+
+/* Tabla */
+.bookings-grid {
+  border-collapse: collapse;
+  width: max-content; /* para habilitar el scroll */
+  min-width: 100%;
+}

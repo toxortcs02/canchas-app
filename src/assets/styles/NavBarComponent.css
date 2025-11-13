@@ -8,9 +8,7 @@
 }
 
 .navbar-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,38 +20,35 @@
   margin: 0;
   padding: 0;
   width: 100%;
-  justify-content: space-evenly;
-  align-items: center;
 }
 
 .navbar-item {
-  display: flex;
-  align-items: center;
+  flex: 1; /* 🔹 Cada botón ocupa la misma proporción del ancho */
+  text-align: center;
 }
 
 .nav-link {
   display: block;
-  padding: 0.6rem 1rem;
+  padding: 1rem 0;
   color: #ecf0f1;
   text-decoration: none;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 500;
   font-family: 'Roboto', sans-serif;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   transition: all 0.3s ease;
   border-bottom: 2px solid transparent;
-  border-radius: 4px;
 }
 
 .nav-link:hover {
-  background-color: rgba(52, 152, 219, 0.1);
+  background-color: #34495e;
   border-bottom-color: #3498db;
   color: #3498db;
 }
 
 .nav-link.active {
-  background-color: rgba(52, 152, 219, 0.15);
+  background-color: #34495e;
   border-bottom-color: #3498db;
   color: #3498db;
 }
@@ -115,13 +110,13 @@
     border-bottom: none;
     border-left: 2px solid transparent;
     border-radius: 0;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 
   .nav-link:hover,
   .nav-link.active {
     border-bottom: none;
     border-left-color: #3498db;
-    background-color: rgba(52, 152, 219, 0.1);
+    background-color: #34495e;
   }
 }
