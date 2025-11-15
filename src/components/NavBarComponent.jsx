@@ -27,7 +27,7 @@ const NavBarComponent = () => {
     };
 
     fetchUser();
-  }, [location]); // Se actualiza cuando cambia la ruta
+  }, [location]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -58,13 +58,13 @@ const NavBarComponent = () => {
           {/* Rutas públicas */}
           <li className="navbar-item">
             <Link to="/" className={isActive("/")} onClick={closeMenu}>
-              Inicio
+               Inicio
             </Link>
           </li>
 
           <li className="navbar-item">
             <Link to="/courts" className={isActive("/courts")} onClick={closeMenu}>
-              Canchas
+               Canchas
             </Link>
           </li>
 
@@ -73,19 +73,19 @@ const NavBarComponent = () => {
             <>
               <li className="navbar-item">
                 <Link to="/booking/new" className={isActive("/booking/new")} onClick={closeMenu}>
-                  Nueva Reserva
+                   Nueva Reserva
                 </Link>
               </li>
 
               <li className="navbar-item">
                 <Link to="/profile/edit" className={isActive("/profile/edit")} onClick={closeMenu}>
-                  Mi Perfil
+                  👤 Mi Perfil
                 </Link>
               </li>
 
               <li className="navbar-item">
                 <Link to="/forgot-password" className={isActive("/forgot-password")} onClick={closeMenu}>
-                  Cambiar Contraseña
+                   Cambiar Contraseña
                 </Link>
               </li>
             </>
@@ -95,26 +95,9 @@ const NavBarComponent = () => {
           {isAdmin && (
             <li className="navbar-item">
               <Link to="/users" className={isActive("/users")} onClick={closeMenu}>
-                Usuarios
+                👥 Usuarios
               </Link>
             </li>
-          )}
-
-          {/* Rutas solo para usuarios no logueados */}
-          {!user && (
-            <>
-              <li className="navbar-item">
-                <Link to="/login" className={isActive("/login")} onClick={closeMenu}>
-                  Iniciar Sesión
-                </Link>
-              </li>
-
-              <li className="navbar-item">
-                <Link to="/register" className={isActive("/register")} onClick={closeMenu}>
-                  Registrarse
-                </Link>
-              </li>
-            </>
           )}
         </ul>
       </div>

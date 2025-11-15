@@ -89,6 +89,9 @@ const HeaderComponent = () => {
               <Link to="/login" className="header-btn header-btn-login">
                 Iniciar Sesión
               </Link>
+              <Link to="/register" className="header-btn header-btn-register">
+                Registrarse
+              </Link>
             </div>
           )}
         </div>

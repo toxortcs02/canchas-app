@@ -1,0 +1,86 @@
+@import './variables.css';
+
+.date-navigation {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.date-display h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.date-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-button {
+  padding: 10px 18px;
+  background-color: var(--color-primary);
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.nav-button:hover {
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+}
+
+.nav-button:active {
+  transform: translateY(0);
+}
+
+.nav-button-today {
+  background-color: var(--color-secondary);
+}
+
+.date-picker {
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  background-color: white;
+  color: var(--color-text-main);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.date-picker:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.date-picker:hover {
+  border-color: var(--color-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .date-display h2 {
+    font-size: 20px;
+  }
+
+  .date-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .nav-button,
+  .date-picker {
+    width: 100%;
+  }
+}

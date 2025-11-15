@@ -7,11 +7,13 @@ export const bookingService = {
     return response.data;
   },
 
-  //obtener reservas de un dia en particular - GET /booking/{date}
-  getBookingsByDate: async (date) => {
-    const response = await api.get(`/booking/${date}`);
-    return response.data;
-  },
+getBookingsByDate: async (date) => {
+  const response = await api.get(`/booking`, {
+    params: { date }
+  });
+
+  return response.data;
+},
 
   // Crear reserva - POST /booking
   createBooking: async (courtId, bookingDatetime, durationBlocks, participants) => {
