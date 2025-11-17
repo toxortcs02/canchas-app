@@ -4,12 +4,7 @@ import "../assets/styles/FooterComponent.css";
 const FooterComponent = () => {
   const currentYear = new Date().getFullYear();
   
-  // Reemplaza con los nombres de tu grupo
-  const groupMembers = [
-    "Nombre Apellido 1",
-    "Nombre Apellido 2", 
-    "Nombre Apellido 3"
-  ];
+
 
   return (
     <footer className="footer">

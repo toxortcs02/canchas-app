@@ -21,7 +21,7 @@ getBookingsByDate: async (date) => {
       court_id: courtId,
       booking_datetime: bookingDatetime,
       duration_blocks: durationBlocks,
-      participants: participants // array de IDs
+      participants: participants 
     });
     return response.data;
   },
