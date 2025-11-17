@@ -28,12 +28,10 @@ const CourtPage = () => {
   if (loading) {
     return (
       <div className="court-page">
-        <HeaderComponent />
-        <NavBarComponent />
+
         <main className="main-content">
           <p>Cargando canchas...</p>
         </main>
-        <FooterComponent />
       </div>
     );
   }
