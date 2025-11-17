@@ -15,8 +15,9 @@ const HeaderComponent = () => {
         try {
           const userId = authService.getCurrentUserId();
           if (userId) {
-            const userData = await userService.getUserById(userId);
-            setUser(userData);
+              const userId = localStorage.getItem("userId");
+              const userName = localStorage.getItem("name"); 
+               setUser({ id: userId, name:userName });
           }
         } catch (error) {
           console.error("Error al obtener usuario:", error);
@@ -74,7 +75,7 @@ const HeaderComponent = () => {
             // Usuario logueado
             <div className="header-user-section">
               <span className="header-username">
-                Hola, {user.first_name} {user.last_name}
+                Hola, {user.name}
               </span>
               <button 
                 onClick={handleLogout} 

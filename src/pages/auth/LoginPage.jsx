@@ -12,7 +12,9 @@ const LoginPage = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [generalError, setGeneralError] = useState('');
-  
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
+
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -66,35 +68,60 @@ const LoginPage = () => {
       // Llamar al servicio de login
       await authService.login(formData.email, formData.password);
       
-      // Redirigir al home después de login exitoso
-      navigate('/');
-      window.location.reload(); // Para actualizar el header/navbar
+      // Mostrar popup de éxito
+      setShowSuccessPopup(true);
+      
+      // Redirigir después de 1.5 segundos
+      setTimeout(() => {
+        navigate('/');
+        // Forzar recarga SOLO después de navegar
+        window.location.reload();
+      }, 1500);
+      
     } catch (error) {
       console.error('Error en login:', error);
       
+      // Establecer mensaje de error según el tipo
       if (error.response?.status === 401) {
         setGeneralError('Credenciales incorrectas. Por favor, verifica tu email y contraseña.');
+
       } else if (error.response?.status === 404) {
         setGeneralError('Usuario no encontrado.');
       } else {
         setGeneralError('Error al iniciar sesión. Por favor, intenta nuevamente.');
       }
-    } finally {
+      setShowErrorPopup(true)
+      // El error se mostrará en la alerta del formulario
+      // NO redirigir ni recargar la página aquí
       setLoading(false);
     }
   };
 
   return (
     <div className="login-page">
+      {/* Popup de éxito */}
+      {showSuccessPopup && (
+        <div className="popup-overlay">
+          <div className="popup-success">
+            <div className="popup-icon">✓</div>
+            <h2>¡Inicio de sesión exitoso!</h2>
+            <p>Redirigiendo al inicio...</p>
+          </div>
+        </div>
+      )}
+
       <div className="login-container">
         <div className="login-header">
+          <div className="login-icon">🎾</div>
           <h1>Iniciar Sesión</h1>
           <p>Accede a tu cuenta para gestionar tus reservas</p>
         </div>
 
-        {generalError && (
+        {/* Alerta de error en el formulario */}
+        {showErrorPopup && (
           <div className="alert alert-error">
-            {generalError}
+            <span className="alert-icon">⚠️</span>
+            <span>{generalError}</span>
           </div>
         )}
 
@@ -110,6 +137,7 @@ const LoginPage = () => {
               className={`form-input ${errors.email ? 'input-error' : ''}`}
               placeholder="tu@email.com"
               disabled={loading}
+              autoComplete="email"
             />
             {errors.email && (
               <span className="error-message">{errors.email}</span>
@@ -127,6 +155,7 @@ const LoginPage = () => {
               className={`form-input ${errors.password ? 'input-error' : ''}`}
               placeholder="Tu contraseña"
               disabled={loading}
+              autoComplete="current-password"
             />
             {errors.password && (
               <span className="error-message">{errors.password}</span>
@@ -138,7 +167,14 @@ const LoginPage = () => {
             className="btn-submit" 
             disabled={loading}
           >
-            {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+            {loading ? (
+              <>
+                <span className="spinner"></span>
+                Iniciando sesión...
+              </>
+            ) : (
+              'Iniciar Sesión'
+            )}
           </button>
         </form>
 

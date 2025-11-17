@@ -6,7 +6,8 @@ export const authService = {
     const response = await api.post('/login', { email, password });
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);
-      // Nota: Tu API no retorna el ID en el login, lo obtendremos después
+      localStorage.setItem('userId', response.data.id);
+      localStorage.setItem('name', response.data.full_name)
     }
     return response.data;
   },
@@ -29,6 +30,7 @@ export const authService = {
     } finally {
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
+      localStorage.removeItem('name')      
     }
   },
 
