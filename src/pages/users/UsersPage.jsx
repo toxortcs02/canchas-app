@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { userService } from '../../services/userService';
 import './UsersPage.css';
+import { EditButton, DeleteButton, ViewButton } from '../../components/Buttons';
 
 const UsersPage = () => {
   const [users, setUsers] = useState([]); 
@@ -21,6 +22,17 @@ const UsersPage = () => {
     };
     fetchUsers();
   }, []); 
+
+
+  const onEdit = (user) => {
+    console.log('Editar usuario:', user);
+  }
+  const onDelete = (user) => {
+    console.log('Borrar usuario:', user);
+  }
+  const onView = (user) => {
+    console.log('Ver usuario:', user);
+  }
 
   
   if (loading) {
@@ -45,8 +57,11 @@ const UsersPage = () => {
               <div key={user.id} className="users-card">
                 <h2 className="user-name">{user.first_name}</h2>
                 <p className="user-lastname">{user.last_name}</p>
-
-                {/* Aquí podrías agregar botones de editar/borrar si es admin */}
+                <div className="action-buttons">
+                <EditButton  onClick={() => onEdit(user)} />
+                <DeleteButton onClick={() => onDelete(user)} />
+                <ViewButton onClick={() => onView(user)} />
+                </div>
               </div>
             ))}
           </div>
