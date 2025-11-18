@@ -67,7 +67,14 @@ const NavBarComponent = () => {
                Canchas
             </Link>
           </li>
-
+                    {/* Rutas solo para administradores */}
+          {isAdmin && (
+            <li className="navbar-item">
+              <Link to="/users" className={isActive("/users")} onClick={closeMenu}>
+                👥 Usuarios
+              </Link>
+            </li>
+          )}
           {/* Rutas solo para usuarios logueados */}
           {user && (
             <>
@@ -76,29 +83,24 @@ const NavBarComponent = () => {
                    Nueva Reserva
                 </Link>
               </li>
-
+|             
+              <li className="navbar-item">
+                <Link to="/forgot-password" className={isActive("/forgot-password")} onClick={closeMenu}>
+                   Cambiar Contraseña
+                </Link>
+              </li>
+                            
               <li className="navbar-item">
                 <Link to="/profile/edit" className={isActive("/profile/edit")} onClick={closeMenu}>
                   👤 Mi Perfil
                 </Link>
               </li>
 
-              <li className="navbar-item">
-                <Link to="/forgot-password" className={isActive("/forgot-password")} onClick={closeMenu}>
-                   Cambiar Contraseña
-                </Link>
-              </li>
+
             </>
           )}
 
-          {/* Rutas solo para administradores */}
-          {isAdmin && (
-            <li className="navbar-item">
-              <Link to="/users" className={isActive("/users")} onClick={closeMenu}>
-                👥 Usuarios
-              </Link>
-            </li>
-          )}
+
         </ul>
       </div>
     </nav>

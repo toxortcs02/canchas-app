@@ -1,4 +1,3 @@
-
 .users-page {
   display: flex;
   flex-direction: column;
@@ -29,13 +28,28 @@
 /* Grid de canchas */
 .users-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+  .users-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .users-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Tarjeta de cancha */
 .users-card {
-  background-color: #fff;
+  background-color: var(--color-bg-dark);
   border-radius: 10px;
   padding: 1.5rem;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -47,21 +61,154 @@
   box-shadow: 0 8px 16px rgba(0,0,0,0.15);
 }
 
-.users-name {
+.user-name {
   margin: 0 0 0.5rem;
-  color: #1a73e8;
+  color: #ffffff;
   font-size: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.users-description {
+.user-name strong {
+  flex-basis: 40%;
+  text-align: left;
+}
+
+.user-name::after {
+  content: attr(data-name);
+  flex-basis: 60%;
+  text-align: right;
+  color: #333;
+}
+
+.user-lastname {
+  margin: 0 0 1rem;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-lastname strong {
+  flex-basis: 40%;
+  text-align: left;
+}
+
+.user-lastname::after {
+  content: attr(data-lastname);
+  flex-basis: 60%;
+  text-align: right;
+}
+
+/* Modal confirmación */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  width: 360px;
+  max-width: 90%;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.modal h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+}
+
+.modal p {
   margin: 0;
-  color: #555;
-  line-height: 1.4;
+  color: #333;
 }
 
-/* Responsivo */
-@media (max-width: 600px) {
-  .main-content {
-    padding: 1rem;
-  }
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.btn {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.btn-cancel {
+  background: transparent;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.btn-delete {
+  background: #d9534f;
+  color: #fff;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.user-details {
+  margin: 12px 0;
+  padding: 10px;
+  background:var(--color-bg-dark);
+  border-radius: 4px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+  gap: 12px;
+}
+
+.detail-label {
+  text-align: left;
+  flex-basis: 40%;
+  color: #ffffff;
+}
+
+.detail-value {
+  text-align: right;
+  flex-basis: 60%;
+  color: #ffffff;
+  word-break: break-all;
+}
+
+.user-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+  padding: 8px 0;
+  border-bottom: none;
+}
+
+.info-label {
+  text-align: left;
+  color: #ffffff;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.info-value {
+  text-align: right;
+  color: #ffffff;
+  margin-left: auto;
+  padding-left: 20px;
 }

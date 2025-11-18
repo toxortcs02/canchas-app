@@ -24,7 +24,7 @@ const LoginPage = () => {
       [name]: value
     }));
     
-    // Limpiar error del campo cuando el usuario empieza a escribir
+    // Limpiar error del campo cuando el usuario empieza a escrwibir
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -79,11 +79,11 @@ const LoginPage = () => {
       }, 1500);
       
     } catch (error) {
-      console.error('Error en login:', error);
       
       // Establecer mensaje de error según el tipo
       if (error.response?.status === 401) {
         setGeneralError('Credenciales incorrectas. Por favor, verifica tu email y contraseña.');
+        alert('Credenciales incorrectas. Por favor, verifica tu email y contraseña.');
 
       } else if (error.response?.status === 404) {
         setGeneralError('Usuario no encontrado.');
@@ -91,11 +91,11 @@ const LoginPage = () => {
         setGeneralError('Error al iniciar sesión. Por favor, intenta nuevamente.');
       }
       setShowErrorPopup(true)
-      // El error se mostrará en la alerta del formulario
-      // NO redirigir ni recargar la página aquí
+
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="login-page">
