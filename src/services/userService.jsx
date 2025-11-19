@@ -26,10 +26,10 @@ export const userService = {
     // Convertir campos al formato de la API
     const data = {
       email: userData.email,
-      first_name: userData.firstName || userData.first_name,
-      last_name: userData.lastName || userData.last_name,
+      first_name: userData.first_name, // usar directamente
+      last_name: userData.last_name,   // usar directamente
     };
-    
+
     // Solo incluir password si se proporciona
     if (userData.password) {
       data.password = userData.password;
