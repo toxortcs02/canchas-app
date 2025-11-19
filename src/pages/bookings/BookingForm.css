@@ -1,1 +1,53 @@
-/* BookingForm.css */
+.booking-card {
+  width: 420px;
+  margin: 20px auto;
+  padding: 25px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px #0002;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.booking-card h2,
+.booking-card h3 {
+  margin: 0;
+  font-weight: bold;
+}
+
+label {
+  font-weight: 600;
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+}
+
+.date-grid,
+.time-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.time-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+.confirm-btn {
+  margin-top: 12px;
+  padding: 12px;
+  background: #0099ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.confirm-btn:disabled {
+  background: #777;
+  cursor: not-allowed;
+}
