@@ -1,181 +1,171 @@
-import React, { useState, useEffect } from "react";
-import HeaderComponent from "../../components/HeaderComponent";
-import FooterComponent from "../../components/FooterComponent";
-import NavBarComponent from "../../components/NavBarComponent";
+import React, { useState } from "react";
+
+
+import SuccessPopup from "../../components/SuccessMessage.jsx";
 import { bookingService } from "../../services/bookingService";
-import { courtService } from "../../services/courtService";
 import "./BookingForm.css";
 
 const BookingForm = () => {
   const today = new Date();
+  const initialDate = today.toISOString().split("T")[0];
 
-  const [courts, setCourts] = useState([]);
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-
-  const [form, setForm] = useState({
-    court_id: "",
+  const [formData, setFormData] = useState({
     day: today.getDate(),
     month: today.getMonth() + 1,
     year: today.getFullYear(),
-    hour: today.getHours(),
-    minutes: "00",
-    duration_blocks: "",
+    hour: "",
+    minutes: "",
+    duration: "",
+    courtId: "",
     participants: "",
   });
 
-  useEffect(() => {
-    const fetchCourts = async () => {
-      try {
-        const data = await courtService.getAllCourts();
-        setCourts(data);
-      } catch (err) {
-        console.error("Error cargando canchas", err);
-      }
-    };
-    fetchCourts();
-  }, []);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const validate = () => {
-    const e = {};
+    let newErrors = {};
 
-    if (!form.court_id) e.court_id = "Elegí una cancha";
-    if (!form.duration_blocks || form.duration_blocks < 1)
-      e.duration_blocks = "Duración inválida";
+    if (!formData.day) newErrors.day = "Obligatorio";
+    if (!formData.month) newErrors.month = "Obligatorio";
+    if (!formData.year) newErrors.year = "Obligatorio";
 
-    if (!form.participants) e.participants = "Ingresá al menos un participante";
+    if (!formData.hour) newErrors.hour = "Elegí un horario";
+    if (!formData.minutes) newErrors.minutes = "Elegí minutos";
 
-    // Validar fecha no pasada
-    const selectedDate = new Date(
-      form.year,
-      form.month - 1,
-      form.day,
-      form.hour,
-      form.minutes
-    );
+    if (!formData.duration) newErrors.duration = "Requerido";
+    if (!formData.courtId) newErrors.courtId = "Requerido";
 
-    if (selectedDate < new Date()) e.date = "No podés elegir un horario pasado";
-
-    setErrors(e);
-    return Object.keys(e).length === 0;
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async () => {
+  const buildDateTime = () => {
+    return `${formData.year}-${String(formData.month).padStart(2, "0")}-${String(
+      formData.day
+    ).padStart(2, "0")}T${String(formData.hour).padStart(2, "0")}:${formData.minutes}:00`;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (!validate()) return;
 
     setLoading(true);
 
-    const bookingDatetime = `${form.year}-${String(form.month).padStart(
-      2,
-      "0"
-    )}-${String(form.day).padStart(2, "0")} ${String(form.hour).padStart(
-      2,
-      "0"
-    )}:${form.minutes}:00`;
-
     try {
+      const bookingDatetime = buildDateTime();
+      const participants = formData.participants
+        ? formData.participants.split(",").map((x) => x.trim())
+        : [];
+
       await bookingService.createBooking(
-        form.court_id,
+        formData.courtId,
         bookingDatetime,
-        Number(form.duration_blocks),
-        form.participants.split(",").map((p) => p.trim())
+        Number(formData.duration),
+        participants
       );
 
-      alert("Reserva creada con éxito");
+      setSuccess(true);
+      setFormData({
+        day: today.getDate(),
+        month: today.getMonth() + 1,
+        year: today.getFullYear(),
+        hour: "",
+        minutes: "",
+        duration: "",
+        courtId: "",
+        participants: "",
+      });
     } catch (err) {
-      console.error(err);
-      alert("Error creando reserva");
+      alert("Error al crear la reserva.");
     } finally {
       setLoading(false);
     }
   };
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   return (
-    <div className="booking-form-page">
+    <div className="booking-page">
 
 
-      <main className="main-content">
-        <div className="booking-card">
+      <main className="booking-container">
+        <div className="booking-header">
+          <span className="booking-icon">📅</span>
+          <h1>Crear Reserva</h1>
+          <p>Completa los datos para registrar una reserva</p>
+        </div>
 
-          <h2>Crear Reserva</h2>
+        <form onSubmit={handleSubmit} className="booking-form">
+          {/* FECHA */}
+          <div className="form-group">
+            <label>Fecha</label>
 
-          {/* Cancha */}
-          <label>Cancha:</label>
-          <select name="court_id" value={form.court_id} onChange={handleChange}>
-            <option value="">Seleccionar</option>
-            {courts.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
-          {errors.court_id && <span className="error">{errors.court_id}</span>}
-
-          <h3>Fecha</h3>
-
-          <div className="date-grid">
-            <div>
-              <label>Día</label>
+            <div className="date-grid">
               <input
                 type="number"
                 name="day"
+                placeholder="Día"
+                value={formData.day}
+                onChange={handleChange}
+                className={`form-input ${errors.day ? "input-error" : ""}`}
                 min="1"
                 max="31"
-                value={form.day}
-                onChange={handleChange}
               />
-            </div>
-
-            <div>
-              <label>Mes</label>
               <input
                 type="number"
                 name="month"
+                placeholder="Mes"
+                value={formData.month}
+                onChange={handleChange}
+                className={`form-input ${errors.month ? "input-error" : ""}`}
                 min="1"
                 max="12"
-                value={form.month}
-                onChange={handleChange}
               />
-            </div>
-
-            <div>
-              <label>Año</label>
               <input
                 type="number"
                 name="year"
-                min={today.getFullYear()}
-                value={form.year}
+                placeholder="Año"
+                value={formData.year}
                 onChange={handleChange}
+                className={`form-input ${errors.year ? "input-error" : ""}`}
+                min={today.getFullYear()}
               />
             </div>
+            {errors.day || errors.month || errors.year ? (
+              <span className="error-message">Fecha incompleta</span>
+            ) : null}
           </div>
 
-          <h3>Hora</h3>
-
           <div className="time-grid">
-            <div>
+            <div className="form-group">
               <label>Hora</label>
-              <input
-                type="number"
+              <select
                 name="hour"
-                min="0"
-                max="23"
-                value={form.hour}
+                value={formData.hour}
                 onChange={handleChange}
-              />
+                className="form-input time-input"
+              >
+                {Array.from({ length: 15 }, (_, i) => {
+                  const hour = i + 8; // 8 a 22
+                  return (
+                    <option key={hour} value={hour.toString().padStart(2, '0')}>
+                      {hour.toString().padStart(2, '0')}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
-
-            <div>
+            <div className="form-group">
               <label>Minutos</label>
               <select
-                name="minutes"
-                value={form.minutes}
+                name="minute"
+                value={formData.minute}
                 onChange={handleChange}
+                className="form-input time-input"
               >
                 <option value="00">00</option>
                 <option value="30">30</option>
@@ -183,42 +173,74 @@ const BookingForm = () => {
             </div>
           </div>
 
-          {errors.date && <span className="error">{errors.date}</span>}
 
-          <label>Duración (bloques de 30 min):</label>
-          <input
-            type="number"
-            name="duration_blocks"
-            min="1"
-            value={form.duration_blocks}
-            onChange={handleChange}
-          />
-          {errors.duration_blocks && (
-            <span className="error">{errors.duration_blocks}</span>
-          )}
+          
+          {/* DURACIÓN */}
+          <div className="form-group">
+            <label>Duración (bloques de 30 min)</label>
+            <input
+              type="number"
+              name="duration"
+              value={formData.duration}
+              onChange={handleChange}
+              className={`form-input ${errors.duration ? "input-error" : ""}`}
+              placeholder="Ej: 2 = 1 hora"
+              min="1"
+            />
+            {errors.duration && (
+              <span className="error-message">{errors.duration}</span>
+            )}
+          </div>
 
-          <label>Participantes (IDs separados por coma):</label>
-          <input
-            type="text"
-            name="participants"
-            value={form.participants}
-            onChange={handleChange}
-          />
-          {errors.participants && (
-            <span className="error">{errors.participants}</span>
-          )}
+          {/* CANCHA */}
+          <div className="form-group">
+            <label>ID de Cancha</label>
+            <input
+              type="number"
+              name="courtId"
+              value={formData.courtId}
+              onChange={handleChange}
+              className={`form-input ${errors.courtId ? "input-error" : ""}`}
+              placeholder="Ej: 1"
+            />
+            {errors.courtId && (
+              <span className="error-message">{errors.courtId}</span>
+            )}
+          </div>
 
-          <button
-            className="confirm-btn"
-            disabled={loading}
-            onClick={handleSubmit}
-          >
-            {loading ? "Creando..." : "Crear Reserva"}
+          {/* PARTICIPANTES */}
+          <div className="form-group">
+            <label>Participantes (IDs separados por coma)</label>
+            <input
+              type="text"
+              name="participants"
+              value={formData.participants}
+              onChange={handleChange}
+              className="form-input"
+              placeholder="Ej: 12, 18, 33"
+            />
+          </div>
+
+          <button className="btn-submit" disabled={loading}>
+            {loading ? (
+              <>
+                <span className="spinner"></span>
+                Creando...
+              </>
+            ) : (
+              "Crear Reserva"
+            )}
           </button>
-        </div>
+        </form>
       </main>
 
-      <FooterComponent />
+
+      {success && (
+        <SuccessPopup
+          message="La reserva fue creada con éxito"
+          onClose={() => setSuccess(false)}
+        />
+      )}
     </div>
   );
 };

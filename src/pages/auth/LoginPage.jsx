@@ -67,7 +67,6 @@ const LoginPage = () => {
     try {
       // Llamar al servicio de login
       await authService.login(formData.email, formData.password);
-      alert("Funcionalidad de login deshabilitada temporalmente.");
       // Mostrar popup de éxito
       setShowSuccessPopup(true);
       
