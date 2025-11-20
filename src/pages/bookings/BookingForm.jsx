@@ -31,8 +31,8 @@ const BookingForm = () => {
     if (!formData.month) newErrors.month = "Obligatorio";
     if (!formData.year) newErrors.year = "Obligatorio";
 
-    if (!formData.hour) newErrors.hour = "Elegí un horario";
-    if (!formData.minutes) newErrors.minutes = "Elegí minutos";
+    if (!formData.hour || formData.hour === "") newErrors.hour = "Elegí un horario";
+    if (!formData.minutes || formData.minutes === "") newErrors.minutes = "Elegí minutos";
 
     if (!formData.duration) newErrors.duration = "Requerido";
     if (!formData.courtId) newErrors.courtId = "Requerido";
@@ -44,7 +44,7 @@ const BookingForm = () => {
   const buildDateTime = () => {
     return `${formData.year}-${String(formData.month).padStart(2, "0")}-${String(
       formData.day
-    ).padStart(2, "0")}T${String(formData.hour).padStart(2, "0")}:${formData.minutes}:00`;
+    ).padStart(2, "0")}T${String(formData.hour).padStart(2, "0")}`;
   };
 
   const handleSubmit = async (e) => {
@@ -90,8 +90,6 @@ const BookingForm = () => {
 
   return (
     <div className="booking-page">
-
-
       <main className="booking-container">
         <div className="booking-header">
           <span className="booking-icon">📅</span>
@@ -103,7 +101,6 @@ const BookingForm = () => {
           {/* FECHA */}
           <div className="form-group">
             <label>Fecha</label>
-
             <div className="date-grid">
               <input
                 type="number"
@@ -147,10 +144,11 @@ const BookingForm = () => {
                 name="hour"
                 value={formData.hour}
                 onChange={handleChange}
-                className="form-input time-input"
+                className={`form-input time-input ${errors.hour ? "input-error" : ""}`}
               >
+                <option value="">Selecciona una hora</option>
                 {Array.from({ length: 15 }, (_, i) => {
-                  const hour = i + 8; // 8 a 22
+                  const hour = i + 8;
                   return (
                     <option key={hour} value={hour.toString().padStart(2, '0')}>
                       {hour.toString().padStart(2, '0')}
@@ -158,23 +156,28 @@ const BookingForm = () => {
                   );
                 })}
               </select>
+              {errors.hour && (
+                <span className="error-message">{errors.hour}</span>
+              )}
             </div>
             <div className="form-group">
               <label>Minutos</label>
               <select
-                name="minute"
-                value={formData.minute}
+                name="minutes"
+                value={formData.minutes}
                 onChange={handleChange}
-                className="form-input time-input"
+                className={`form-input time-input ${errors.minutes ? "input-error" : ""}`}
               >
+                <option value="">Selecciona minutos</option>
                 <option value="00">00</option>
                 <option value="30">30</option>
               </select>
+              {errors.minutes && (
+                <span className="error-message">{errors.minutes}</span>
+              )}
             </div>
           </div>
 
-
-          
           {/* DURACIÓN */}
           <div className="form-group">
             <label>Duración (bloques de 30 min)</label>
@@ -233,7 +236,6 @@ const BookingForm = () => {
           </button>
         </form>
       </main>
-
 
       {success && (
         <SuccessPopup

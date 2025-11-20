@@ -5,13 +5,16 @@ const SuccessMessage = ({ message, onClose }) => {
   if (!message) return null;
 
   return (
-    <div className="success-message-container">
-      <div className="success-message-box">
-        <span className="success-icon">✔</span>
-        <p className="success-text">{message}</p>
-
+    <div className="popup-overlay" onClick={onClose}>
+      <div className="popup-success" onClick={(e) => e.stopPropagation()}>
+        <div className="popup-icon">✓</div>
+        <h2>{message}</h2>
         {onClose && (
-          <button className="success-close-btn" onClick={onClose}>
+          <button 
+            className="btn-submit" 
+            style={{ marginTop: "20px", width: "auto", padding: "10px 20px" }}
+            onClick={onClose}
+          >
             Cerrar
           </button>
         )}

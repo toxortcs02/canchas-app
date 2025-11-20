@@ -63,7 +63,7 @@ const UsersPage = () => {
 const handleConfirmEdit = async () => {
   if (!userToEdit) return;
 
-  const { first_name, last_name, email, password } = editForm;
+  const { first_name, last_name, email } = editForm;
 
   // 1. Validar campos obligatorios
   if (!first_name?.trim() || !last_name?.trim() || !email?.trim()) {
@@ -78,17 +78,7 @@ const handleConfirmEdit = async () => {
     return;
   }
 
-  // 3. Validar password si se proporcionó
-  if (password) {
-    const pass = password.trim();
-    const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-    if (!passRegex.test(pass)) {
-      alert(
-        "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial."
-      );
-      return;
-    }
-  }
+
 
   setEditLoading(true);
 
@@ -100,9 +90,7 @@ const handleConfirmEdit = async () => {
       email: email.trim(),
     };
 
-    if (password) {
-      dataToSend.password = password.trim();
-    }
+
 
     // Llamada al servicio
     const updatedUser = await userService.updateUser(userToEdit.id, dataToSend);

@@ -70,10 +70,10 @@
 }
 
 .alert-error {
-  background-color: #fee;
-  border: 2px solid var(--color-secondary);
-  color: #c33;
-  font-size: 14px;
+  background-color: #fee !important;
+  border: 2px solid var(--color-secondary) !important;
+  color: #c33 !important;
+  font-size: 14px !important;
 }
 
 .alert-icon {
@@ -107,16 +107,18 @@
   font-size: 15px;
   font-family: inherit;
   transition: var(--transition);
-  background-color: var(--color-bg-light);
-  color: var(--color-text-main); 
+  background-color: #fff;
+  color: #000; 
 }
+
 .form-input:focus {
   outline: none;
-  border-color: var(--color-primary);
-  background-color: white;
-  color: #000;
-  box-shadow: 0 0 0 3px rgba(143, 228, 74, 0.2);
+
+  background-color: rgb(255, 255, 255);
+  color: #000; /* <-- agregado para contraste */
+  box-shadow: 0 0 0 3px rgba(115, 255, 0, 0.2);
 }
+
 
 .form-input:disabled {
   background-color: #e9ecef;
@@ -134,8 +136,13 @@
 .form-input.input-error:focus {
   border-color: var(--color-secondary);
   background-color: white;
-  color: #000; 
+  color: #000; /* <-- agregado */
   box-shadow: 0 0 0 3px rgba(199, 106, 59, 0.2);
+}
+input.form-input {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #ccc !important;
 }
 
 
