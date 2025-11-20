@@ -65,7 +65,10 @@
   background-color: white !important;
   color: black !important;
 }
-
+.label {
+  color: black !important
+  ;
+}
 .form-input {
   width: 100%;
   padding: 12px 16px;

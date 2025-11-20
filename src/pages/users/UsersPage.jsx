@@ -20,7 +20,7 @@ const UsersPage = () => {
   const [deleteLoading, setDeleteLoading] = useState(false);
 
   // user details show/hide
-  const [selectedUserId, setSelectedUserId] = useState(null);
+const [selectedUserIds, setSelectedUserIds] = useState([]);
 
   // formulario de edición
   const [editForm, setEditForm] = useState({
@@ -144,10 +144,14 @@ const handleConfirmEdit = async () => {
 
 
   // Mostrar detalles solo del usuario seleccionado
-  const onView = (user) => {
-    console.log('Ver usuario:', user);
-    setSelectedUserId(selectedUserId === user.id ? null : user.id);
-  }
+const onView = (user) => {
+  setSelectedUserIds((prev) => 
+    prev.includes(user.id) 
+      ? prev.filter(id => id !== user.id) // si ya estaba, lo quita
+      : [...prev, user.id]                // si no estaba, lo agrega
+  );
+};
+
 
   // Función para hacer mayuscula la primera letra
   const capitalize = (str) => {
@@ -186,7 +190,7 @@ const handleConfirmEdit = async () => {
                   <span className="info-value">{capitalize(user.last_name)}</span>
                 </div>
 
-                {selectedUserId === user.id && (
+                {selectedUserIds.includes(user.id) && (
                   <div className="user-details">
                     <div className="detail-row">
                       <span className="detail-label"><strong>Email:</strong></span>
