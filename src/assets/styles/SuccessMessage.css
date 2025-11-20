@@ -1,0 +1,38 @@
+.success-message-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.success-message-box {
+  background-color: #d1f7d6;
+  border: 1px solid #7acb8a;
+  color: #256838;
+  padding: 12px 18px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 250px;
+  font-size: 15px;
+}
+
+.success-icon {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.success-close-btn {
+  margin-left: auto;
+  background: #2d8a42;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.success-close-btn:hover {
+  background: #256f36;
+}

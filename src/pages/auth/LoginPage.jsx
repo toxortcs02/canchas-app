@@ -54,7 +54,7 @@ const LoginPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+     e.preventDefault();
     setGeneralError('');
 
     // Validar formulario
@@ -67,7 +67,6 @@ const LoginPage = () => {
     try {
       // Llamar al servicio de login
       await authService.login(formData.email, formData.password);
-      
       // Mostrar popup de éxito
       setShowSuccessPopup(true);
       
@@ -75,15 +74,14 @@ const LoginPage = () => {
       setTimeout(() => {
         navigate('/');
         // Forzar recarga SOLO después de navegar
-        window.location.reload();
+       window.location.reload();
       }, 1500);
       
     } catch (error) {
       
       // Establecer mensaje de error según el tipo
-      if (error.response?.status === 401) {
+       if (error.response?.status === 401) {
         setGeneralError('Credenciales incorrectas. Por favor, verifica tu email y contraseña.');
-        alert('Credenciales incorrectas. Por favor, verifica tu email y contraseña.');
 
       } else if (error.response?.status === 404) {
         setGeneralError('Usuario no encontrado.');
@@ -93,7 +91,9 @@ const LoginPage = () => {
       setShowErrorPopup(true)
 
       setLoading(false);
-    }
+    
+    
+      }
   };
   
 
