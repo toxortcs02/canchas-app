@@ -7,11 +7,9 @@
 ## Librerías Externas
 
 ### **react-router-dom** 
-Librería esencial para el manejo de rutas y navegación en la aplicación.
+Librería esencial para el manejo de rutas y navegación en la aplicación.}
 
-**¿Por qué se utiliza?**
-- Permite definir múltiples páginas con URLs únicas (`/login`, `/courts`, `/booking`)
-- Navegación sin recargas de página (SPA - Single Page Application)
-- Protección de rutas según autenticación y permisos de usuario
-- Gestión del historial del navegador
+### **select2**
+Libreria externa para listados de multiple seleccion
+
 
