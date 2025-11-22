@@ -1,9 +1,11 @@
-/* Base */
+/* ============================================
+   PAGE WRAPPER
+============================================ */
 .court-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #f7f7f7;
+  background-color: #f3f3f3;
   font-family: 'Arial', sans-serif;
 }
 
@@ -14,48 +16,137 @@
   margin: 0 auto;
 }
 
+/* ============================================
+   TITLE + ACTION BUTTONS
+============================================ */
 .court-list h1 {
   text-align: center;
   margin-bottom: 2rem;
-  color: #333;
+  color: #222;
+  font-weight: bold;
 }
 
-/* Grid de canchas */
+/* Botón Crear Cancha */
+.admin-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.btn-create {
+  background: #1a73e8;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-create:hover {
+  background: #155ec0;
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   COURT GRID
+============================================ */
 .court-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-/* Tarjeta de cancha */
+@media (max-width: 900px) {
+  .court-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .court-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   COURT CARD
+============================================ */
 .court-card {
   background-color: #fff;
   border-radius: 10px;
   padding: 1.5rem;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .court-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
 }
 
+/* ============================================
+   COURT INFO
+============================================ */
 .court-name {
   margin: 0 0 0.5rem;
-  color: #1a73e8;
   font-size: 1.25rem;
+  color: #1a73e8;
+  font-weight: bold;
 }
 
 .court-description {
-  margin: 0;
-  color: #555;
+  margin-top: 10px;
+  color: #222;
+  font-size: 0.95rem;
   line-height: 1.4;
 }
 
-/* Responsivo */
-@media (max-width: 600px) {
-  .main-content {
-    padding: 1rem;
-  }
+/* ============================================
+   ACTION BUTTONS
+============================================ */
+.actions {
+  margin-top: 1.2rem;
+  display: flex;
+  gap: 50px;
+  justify-content: center;
+}
+
+.btn-edit,
+.btn-delete {
+  padding: 15px 26px;
+  border-radius: 1;
+  border: none;
+  cursor: pointer;
+  display: flex;              /* <— agrega esto */
+  justify-content: center;    /* <— centra horizontal */
+  align-items: center;        /* <— centra vertical */
+  text-align: center;
+  font-size: 0.95rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+/* Editar */
+.btn-edit {
+  background: #0adf03;
+  color: #000;
+}
+
+.btn-edit:hover {
+  background: #136802e0;
+  transform: translateY(-2px);
+}
+
+/* Eliminar */
+.btn-delete {
+  background: #d9534f;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #c64541;
+  transform: translateY(-2px);
 }
