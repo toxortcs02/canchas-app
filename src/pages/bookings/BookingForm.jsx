@@ -94,11 +94,18 @@ const BookingForm = () => {
           placeholder: "Selecciona participantes",
           allowClear: true,
         });
-
         window.$(userSelectRef.current).on("change", function () {
-          const values = window.$(this).val() || [];
+          let values = window.$(this).val() || [];
+
+          // 👉 Limitar a máximo 3 participantes
+          if (values.length > 3) {
+            values = values.slice(0, 3); // Forzar solo 3
+            window.$(this).val(values).trigger("change.select2");
+          }
+
           setFormData((prev) => ({ ...prev, participants: values }));
         });
+
       }
 
       isSelect2InitializedRef.current = true;
@@ -111,7 +118,7 @@ const BookingForm = () => {
   // -------------------------------------------
   // VALIDACIÓN
   // -------------------------------------------
- const validate = () => {
+const validate = () => {
   let newErrors = {};
 
   if (!formData.day) newErrors.day = "Obligatorio";
@@ -129,6 +136,15 @@ const BookingForm = () => {
   if (participantCount !== 1 && participantCount !== 3) {
     newErrors.participants =
       "Debes seleccionar exactamente 1 o 3 participantes (sin contarte)";
+  }
+
+  // 👉 Validación: máximo 6 bloques (3 horas)
+  if (formData.duration) {
+    const duration = parseInt(formData.duration);
+    if (duration > 6) {
+      newErrors.duration =
+        "Una reserva no puede superar los 6 bloques (3 horas)";
+    }
   }
 
   // Validación horario
@@ -161,6 +177,7 @@ const BookingForm = () => {
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0;
 };
+
 
 
   // -------------------------------------------
@@ -215,23 +232,27 @@ const handleSubmit = async (e) => {
     }
 
   } catch (err) {
-    console.error("Error creando reserva:", err);
+  console.error("Error creando reserva:", err);
 
-    // Si la sesión venció
-    if (err.response && err.response.status === 401) {
-      alert("Tu sesión ha vencido. Debes volver a iniciar sesión.");
-      window.location.reload();
-      return;
-    }
-      if (err.response && err.response.status  === 409) {
-    setErrorMessage(err.response.data.error); 
+  // Si la sesión venció
+  if (err.response && err.response.status === 401) {
+    alert(err.response.data.error || "Error de autorización");
+    window.location.reload();
     return;
-      } 
-
-    alert("Error al crear la reserva:", err.response.data.error);
-  } finally {
-    setLoading(false);
   }
+
+  // Conflicto → usar mensaje exacto del backend
+  if (err.response && err.response.status === 409) {
+    setErrorMessage(err.response.data.error);
+    return;
+  }
+
+  // Error genérico → SIEMPRE usar mensaje del backend
+  alert(err.response?.data?.error || "Error desconocido al crear la reserva");
+} finally {
+  setLoading(false);
+}
+
 };
 
   const handleChange = (e) =>

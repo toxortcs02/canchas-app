@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../assets/styles/CourtModal.css"; // si tenés un CourtEditModal.css, cambiá esto
 
-const CourtEditModal = ({ court, editForm, setEditForm, onCancel, onConfirm, loading }) => {
+const CourtCreateModal = ({ court, editForm, setEditForm, onCancel, onConfirm, loading }) => {
   const [errors, setErrors] = useState({
     name: "",
     description: ""
@@ -13,19 +13,17 @@ const CourtEditModal = ({ court, editForm, setEditForm, onCancel, onConfirm, loa
   const validate = (field, value) => {
     let error = "";
 
-        if (field === "name" && !value.trim()) {
-        error = "Este campo es obligatorio";
-        }
-
-
+    if (field === "name" && !value.trim()) {
+      error = "Este campo es obligatorio";
+    }
 
     setErrors((prev) => ({ ...prev, [field]: error }));
   };
 
   // Habilitar botón si todo está ok
-  useEffect(() => {
+    useEffect(() => {
     const hasErrors = Object.values(errors).some((e) => e !== "");
-    const requiredFilled =editForm.name.trim();
+    const requiredFilled = editForm.name.trim();
 
     setIsValid(!hasErrors && requiredFilled);
   }, [errors, editForm]);
@@ -41,10 +39,10 @@ const CourtEditModal = ({ court, editForm, setEditForm, onCancel, onConfirm, loa
     onConfirm();
   };
 
-  return (
+   return (
     <div className="modal-overlay">
       <div className="modal">
-        <h3>Editar Cancha</h3>
+        <h3>Crear Cancha</h3>
 
         <form onSubmit={handleSubmit} noValidate>
 
@@ -62,20 +60,21 @@ const CourtEditModal = ({ court, editForm, setEditForm, onCancel, onConfirm, loa
 
           {/* Descripción */}
           <div className="form-group">
-            <label>Descripción:</label>
+            <label>Descripción (opcional):</label>
             <input
               type="text"
               name="description"
               value={editForm.description}
               onChange={handleChange}
             />
-            {errors.description && <span className="error">{errors.description}</span>}
           </div>
 
-
-
           <div className="modal-actions">
-            <button type="button" className="btn btn-cancel" onClick={onCancel}>
+            <button
+              type="button"
+              className="btn btn-cancel"
+              onClick={onCancel}
+            >
               Cancelar
             </button>
 
@@ -84,7 +83,7 @@ const CourtEditModal = ({ court, editForm, setEditForm, onCancel, onConfirm, loa
               className="btn btn-confirm"
               disabled={!isValid || loading}
             >
-              {loading ? "Guardando..." : "Editar"}
+              {loading ? "Creando..." : "Crear"}
             </button>
           </div>
 
@@ -94,4 +93,4 @@ const CourtEditModal = ({ court, editForm, setEditForm, onCancel, onConfirm, loa
   );
 };
 
-export default CourtEditModal;
+export default CourtCreateModal;

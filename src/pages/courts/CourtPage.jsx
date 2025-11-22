@@ -4,6 +4,7 @@ import { authService } from "/src/services/authService.jsx";
 import { userService } from "/src/services/userService.jsx";
 import { EditButton, DeleteButton } from '../../components/Buttons';
 import EditCourtModal from '../../components/CourtEditModal.jsx';
+import CreateCourtModal from '../../components/CourtCreateModal.jsx';
 import "./CourtPage.css";
 
 const CourtPage = () => {
@@ -18,6 +19,15 @@ const CourtPage = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [courtToEdit, setCourtToEdit] = useState(null);
     const [editLoading, setEditLoading] = useState(false);
+
+    const [showCreateModal, setShowCreateModal] = useState(false);
+
+    const [newCourtForm, setNewCourtForm] = useState({
+      name: "",
+      description: ""
+    });
+    const [createLoading, setCreateLoading] = useState(false);
+    const [createError, setCreateError] = useState("");
 
       const [editForm, setEditForm] = useState({
         name: "",
@@ -155,6 +165,49 @@ const handleConfirmEdit = async () => {
 
   const isAdmin = user && user.is_admin;
 
+
+
+  // Abrir modal
+const openCreateModal = () => {
+  setNewCourtForm({ name: "", description: "" });
+  setCreateError("");
+  setShowCreateModal(true);
+};
+
+// Cerrar modal
+const closeCreateModal = () => {
+  setShowCreateModal(false);
+};
+
+// Confirmar creación
+const handleCreateCourt = async () => {
+  try {
+    setCreateLoading(true);
+    setCreateError("");
+
+    const response = await courtService.createCourt(newCourtForm.name, newCourtForm.description);
+
+    // Si el backend devolvió error
+    if (response.error) {
+      setCreateError(response.error);
+      alert(response.error);
+      setCreateLoading(false);
+      return;
+    }
+
+    // Recargar listado de canchas
+    await fetchCourts();
+
+    setShowCreateModal(false);
+  } catch (error) {
+    const msg = error?.response?.data?.error || 'Error al crear cancha';
+      alert(msg);
+    setCreateError("Ocurrió un error al crear la cancha");
+  } finally {
+    setCreateLoading(false);
+  }
+};
+
   return (
     <div className="court-page">
       <div className="main-content">
@@ -163,7 +216,10 @@ const handleConfirmEdit = async () => {
 
           {isAdmin && (
             <div className="admin-actions">
-              <button className="btn-create">+ Crear Nueva Cancha</button>
+              <button className="btn btn-primary" onClick={openCreateModal}>
+                Crear cancha
+              </button>
+
             </div>
           )}
 
@@ -178,6 +234,17 @@ const handleConfirmEdit = async () => {
               loading={editLoading}
             />
           )}
+
+          {showCreateModal && (
+            <CreateCourtModal
+              editForm={newCourtForm}
+              setEditForm={setNewCourtForm}
+              onCancel={closeCreateModal}
+              onConfirm={handleCreateCourt}
+              loading={createLoading}
+            />
+          )}
+
 
           {showDeleteModal && courtToDelete && (
               <div className="modal-overlay">

@@ -1,49 +1,41 @@
 import React, { useState, useEffect } from "react";
 import "../assets/styles/UserEditModal.css";
 
-
 const UserEditModal = ({ user, editForm, setEditForm, onCancel, onConfirm, loading }) => {
   const [errors, setErrors] = useState({
     first_name: "",
     last_name: "",
-    email: "",
-    password: "",
+    email: ""
   });
+
   const [isValid, setIsValid] = useState(false);
 
-  // Función para validar inputs
+  // Validación
   const validate = (field, value) => {
     let error = "";
 
-    if (!value.trim() && field !== "password") {
+    if (!value.trim()) {
       error = "Este campo es obligatorio";
     }
 
-    if (field === "email" && value) {
+    if (field === "email" && value.trim()) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(value.trim())) {
         error = "Formato de email inválido";
       }
     }
 
-    if (field === "password" && value) {
-      const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-      if (!passRegex.test(value.trim())) {
-        error =
-          "Debe tener 8 caracteres, mayúscula, minúscula, número y carácter especial";
-      }
-    }
-
     setErrors((prev) => ({ ...prev, [field]: error }));
   };
 
-  // Validar todo el form para habilitar/deshabilitar botón
+  // Habilitar botón si todo está bien
   useEffect(() => {
     const hasErrors = Object.values(errors).some((e) => e !== "");
     const requiredFilled =
       editForm.first_name.trim() &&
       editForm.last_name.trim() &&
       editForm.email.trim();
+
     setIsValid(!hasErrors && requiredFilled);
   }, [errors, editForm]);
 
@@ -62,7 +54,10 @@ const UserEditModal = ({ user, editForm, setEditForm, onCancel, onConfirm, loadi
     <div className="modal-overlay">
       <div className="modal">
         <h3>Editar Usuario</h3>
+
         <form onSubmit={handleSubmit} noValidate>
+          
+          {/* Nombre */}
           <div className="form-group">
             <label>Nombre:</label>
             <input
@@ -73,6 +68,8 @@ const UserEditModal = ({ user, editForm, setEditForm, onCancel, onConfirm, loadi
             />
             {errors.first_name && <span className="error">{errors.first_name}</span>}
           </div>
+
+          {/* Apellido */}
           <div className="form-group">
             <label>Apellido:</label>
             <input
@@ -83,6 +80,8 @@ const UserEditModal = ({ user, editForm, setEditForm, onCancel, onConfirm, loadi
             />
             {errors.last_name && <span className="error">{errors.last_name}</span>}
           </div>
+
+          {/* Email */}
           <div className="form-group">
             <label>Email:</label>
             <input
@@ -93,20 +92,12 @@ const UserEditModal = ({ user, editForm, setEditForm, onCancel, onConfirm, loadi
             />
             {errors.email && <span className="error">{errors.email}</span>}
           </div>
-          <div className="form-group">
-            <label>Password (opcional):</label>
-            <input
-              type="password"
-              name="password"
-              value={editForm.password || ""}
-              onChange={handleChange}
-            />
-            {errors.password && <span className="error">{errors.password}</span>}
-          </div>
+
           <div className="modal-actions">
             <button type="button" className="btn btn-cancel" onClick={onCancel}>
               Cancelar
             </button>
+
             <button type="submit" className="btn btn-confirm" disabled={!isValid || loading}>
               {loading ? "Editando..." : "Editar"}
             </button>
