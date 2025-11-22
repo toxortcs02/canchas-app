@@ -13,12 +13,12 @@ export const EditButton = ({ onClick, label = "Editar", disabled = false }) => (
   </button>
 );
 
-export const DeleteButton = ({ onClick, label = "Borrar", disabled = false }) => (
+export const DeleteButton = ({ onClick, label = "Borrar", disabled = false,title  }) => (
   <button
     className="btn btn-delete"
     onClick={onClick}
     disabled={disabled}
-    title={label}
+    title={title}
   >
     {label}
   </button>

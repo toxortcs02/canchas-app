@@ -13,9 +13,10 @@ const CourtEditModal = ({ court, editForm, setEditForm, onCancel, onConfirm, loa
   const validate = (field, value) => {
     let error = "";
 
-    if (!value.trim()) {
-      error = "Este campo es obligatorio";
-    }
+        if (field === "name" && !value.trim()) {
+        error = "Este campo es obligatorio";
+        }
+
 
 
     setErrors((prev) => ({ ...prev, [field]: error }));
@@ -24,8 +25,7 @@ const CourtEditModal = ({ court, editForm, setEditForm, onCancel, onConfirm, loa
   // Habilitar botón si todo está ok
   useEffect(() => {
     const hasErrors = Object.values(errors).some((e) => e !== "");
-    const requiredFilled =
-      editForm.name.trim() && editForm.description.trim();
+    const requiredFilled =editForm.name.trim();
 
     setIsValid(!hasErrors && requiredFilled);
   }, [errors, editForm]);
@@ -63,7 +63,8 @@ const CourtEditModal = ({ court, editForm, setEditForm, onCancel, onConfirm, loa
           {/* Descripción */}
           <div className="form-group">
             <label>Descripción:</label>
-            <textarea
+            <input
+              type="text"
               name="description"
               value={editForm.description}
               onChange={handleChange}

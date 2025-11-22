@@ -16,6 +16,12 @@ export const courtService = {
     return response.data;
   },
 
+
+    getCourtBookings: async (id) => {
+    const response = await api.get(`/court/${id}/bookings`);
+    return response.data;
+  },
+
   // Actualizar cancha - PUT /court/{id} (solo admin)
   updateCourt: async (id, name, description) => {
     const response = await api.put(`/court/${id}`, {
