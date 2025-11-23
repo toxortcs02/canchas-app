@@ -1,7 +1,8 @@
 @import '../../assets/styles/variables.css';
 
 .login-page {
-  min-height: calc(100vh - 200px);
+  min-height: calc(100vh - 300px);
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,7 +16,7 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   padding: 40px;
   width: 100%;
-  max-width: 450px;
+  max-width: 450px ;
   animation: slideUp 0.4s ease;
 }
 

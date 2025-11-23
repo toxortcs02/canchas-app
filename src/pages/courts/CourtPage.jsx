@@ -214,7 +214,7 @@ const handleCreateCourt = async () => {
         <div className="court-list">
           <h1>Listado de Canchas</h1>
 
-          {isAdmin && (
+          {Boolean(isAdmin) && (
             <div className="admin-actions">
               <button className="btn btn-primary" onClick={openCreateModal}>
                 Crear cancha
@@ -286,7 +286,7 @@ const handleCreateCourt = async () => {
                     {court.description ? court.description : "Sin descripción"}
                   </p>
 
-                {isAdmin && (
+                {Boolean(isAdmin) && (
                   <div className="actions">
                       <EditButton  onClick={() => onEdit(court)} />
                       <DeleteButton onClick={() => confirmDelete(court)} 

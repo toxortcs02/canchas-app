@@ -70,10 +70,11 @@
   }
 }
 
-/* Botón de cerrar dentro del popup - EN EL MEDIO Y ROJO */
-.popup-success button {
+/* Botón de cerrar dentro del popup */
+.popup-close-btn {
   margin-top: 20px;
   padding: 10px 20px;
+  width: auto;
   background: #d9534f;
   color: white;
   border: none;
@@ -84,7 +85,7 @@
   align-self: center;
 }
 
-.popup-success button:hover {
+.popup-close-btn:hover {
   background: #c9302c;
   filter: brightness(0.95);
 }

@@ -75,10 +75,10 @@ const RegisterPage = () => {
     console.log("Registrando usuario:", formData);
     try {
       await authService.register(
-        formData.email,
+        formData.email,formData.password,
         formData.first_name,
-        formData.last_name,
-        formData.password
+        formData.last_name
+        
       );
 
       setSuccess(true);

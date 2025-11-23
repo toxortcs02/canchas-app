@@ -1,1 +1,333 @@
-/* UsersUpdatePage.css */
+/* ============================================
+   USERS UPDATE PAGE - Versión página completa
+   ============================================ */
+
+.users-update-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8eef3 100%);
+}
+
+.users-update-page .main-content {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.user-edit-card {
+  width: 100%;
+  max-width: 700px;
+  background: #fff;
+  padding: 50px 60px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.user-edit-card h1 {
+  width: 100%;
+  text-align: center;
+  margin: 0 0 30px 0;
+  font-size: 32px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* Descripción opcional debajo del título */
+.user-edit-card .page-description {
+  text-align: center;
+  color: #666;
+  margin: -20px 0 20px 0;
+  font-size: 15px;
+}
+
+.user-edit-card .form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.user-edit-card .form-group label {
+  font-weight: 600;
+  font-size: 15px;
+  color: #333;
+}
+
+.user-edit-card .form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.user-edit-card .form-group input:focus {
+  outline: none;
+  border-color: #1877f2;
+  box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.1);
+}
+
+.user-edit-card .form-group input.input-error {
+  border-color: #e74c3c;
+}
+
+.user-edit-card .error {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 5px;
+  text-align: left;
+  font-weight: 500;
+}
+
+.user-edit-card .modal-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.user-edit-card .btn-confirm {
+  padding: 14px 40px;
+  background: #1877f2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 180px;
+}
+
+.user-edit-card .btn-confirm:hover {
+  background: #0f5ec4;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
+}
+
+.user-edit-card .btn-confirm:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+
+/* ============================================
+   CHANGE PASSWORD PAGE - Versión página completa
+   ============================================ */
+
+.forgot-password-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8eef3 100%);
+}
+
+.forgot-password-page .main-content {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.forgot-password-form {
+  width: 100%;
+  max-width: 700px;
+  background: #fff;
+  padding: 50px 60px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.forgot-password-form h2 {
+  width: 100%;
+  text-align: center;
+  margin: 0 0 30px 0;
+  font-size: 32px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.forgot-password-form .page-description {
+  text-align: center;
+  color: #666;
+  margin: -20px 0 20px 0;
+  font-size: 15px;
+}
+
+.forgot-password-form .form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.forgot-password-form .form-group label {
+  font-weight: 600;
+  font-size: 15px;
+  color: #333;
+}
+
+.forgot-password-form input,
+.forgot-password-form .form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.forgot-password-form input:focus,
+.forgot-password-form .form-group input:focus {
+  outline: none;
+  border-color: #1877f2;
+  box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.1);
+}
+
+.forgot-password-form .form-group input.input-error {
+  border-color: #e74c3c;
+}
+
+.forgot-password-form .error {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 5px;
+  text-align: left;
+  font-weight: 500;
+}
+
+.forgot-password-form .modal-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.forgot-password-form .forgot-password-button,
+.forgot-password-form .btn-confirm {
+  padding: 14px 40px;
+  background: #1877f2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 180px;
+}
+
+.forgot-password-form .forgot-password-button:hover,
+.forgot-password-form .btn-confirm:hover {
+  background: #0f5ec4;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
+}
+
+.forgot-password-form .forgot-password-button:disabled,
+.forgot-password-form .btn-confirm:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Mensajes de error/éxito globales */
+.forgot-password-form .error-msg {
+  background: #fee;
+  color: #c33;
+  padding: 14px;
+  border-radius: 8px;
+  border-left: 4px solid #e74c3c;
+  margin-bottom: 15px;
+  text-align: left;
+  font-size: 15px;
+}
+
+.forgot-password-form .success-msg {
+  background: #efe;
+  color: #2a7;
+  padding: 14px;
+  border-radius: 8px;
+  border-left: 4px solid #27ae60;
+  margin-bottom: 15px;
+  text-align: left;
+  font-size: 15px;
+}
+
+
+/* ============================================
+   RESPONSIVE - Tablets y móviles
+   ============================================ */
+
+@media (max-width: 768px) {
+  .user-edit-card,
+  .forgot-password-form {
+    max-width: 100%;
+    padding: 40px 30px;
+  }
+
+  .user-edit-card h1,
+  .forgot-password-form h2 {
+    font-size: 28px;
+  }
+
+  .users-update-page .main-content,
+  .forgot-password-page .main-content {
+    padding: 40px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-edit-card,
+  .forgot-password-form {
+    padding: 30px 20px;
+    gap: 20px;
+  }
+
+  .user-edit-card h1,
+  .forgot-password-form h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .user-edit-card .form-group input,
+  .forgot-password-form input {
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+
+  .user-edit-card .btn-confirm,
+  .forgot-password-form .forgot-password-button,
+  .forgot-password-form .btn-confirm {
+    padding: 12px 30px;
+    font-size: 16px;
+    min-width: 150px;
+  }
+
+  .users-update-page .main-content,
+  .forgot-password-page .main-content {
+    padding: 30px 15px;
+  }
+}

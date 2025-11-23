@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { authService } from '/src/services/authService.jsx';
-import { validators } from  '/src/utils/validator.js';
+import { validators } from '/src/utils/validator.js';
+import SuccessPopup from '/src/components/SuccessMessage.jsx';
 import './LoginPage.css';
 
 const LoginPage = () => {
@@ -13,7 +14,6 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const [generalError, setGeneralError] = useState('');
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-  const [showErrorPopup, setShowErrorPopup] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ const LoginPage = () => {
       [name]: value
     }));
     
-    // Limpiar error del campo cuando el usuario empieza a escrwibir
+    // Limpiar error del campo cuando el usuario empieza a escribir
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -54,7 +54,7 @@ const LoginPage = () => {
   };
 
   const handleSubmit = async (e) => {
-     e.preventDefault();
+    e.preventDefault();
     setGeneralError('');
 
     // Validar formulario
@@ -67,6 +67,7 @@ const LoginPage = () => {
     try {
       // Llamar al servicio de login
       await authService.login(formData.email, formData.password);
+      
       // Mostrar popup de éxito
       setShowSuccessPopup(true);
       
@@ -74,42 +75,25 @@ const LoginPage = () => {
       setTimeout(() => {
         navigate('/');
         // Forzar recarga SOLO después de navegar
-       window.location.reload();
+        window.location.reload();
       }, 1500);
       
     } catch (error) {
-      
       // Establecer mensaje de error según el tipo
-       if (error.response?.status === 401) {
+      if (error.response?.status === 401) {
         setGeneralError('Credenciales incorrectas. Por favor, verifica tu email y contraseña.');
-
       } else if (error.response?.status === 404) {
         setGeneralError('Usuario no encontrado.');
       } else {
         setGeneralError('Error al iniciar sesión. Por favor, intenta nuevamente.');
       }
-      setShowErrorPopup(true)
 
       setLoading(false);
-    
-    
-      }
+    }
   };
-  
 
   return (
     <div className="login-page">
-      {/* Popup de éxito */}
-      {showSuccessPopup && (
-        <div className="popup-overlay">
-          <div className="popup-success">
-            <div className="popup-icon">✓</div>
-            <h2>¡Inicio de sesión exitoso!</h2>
-            <p>Redirigiendo al inicio...</p>
-          </div>
-        </div>
-      )}
-
       <div className="login-container">
         <div className="login-header">
           <div className="login-icon">🎾</div>
@@ -118,7 +102,7 @@ const LoginPage = () => {
         </div>
 
         {/* Alerta de error en el formulario */}
-        {showErrorPopup && (
+        {generalError && (
           <div className="alert alert-error">
             <span className="alert-icon">⚠️</span>
             <span>{generalError}</span>
@@ -182,6 +166,14 @@ const LoginPage = () => {
           <p>¿No tienes una cuenta? <Link to="/register">Regístrate aquí</Link></p>
         </div>
       </div>
+
+      {/* Popup de éxito usando el componente */}
+      {showSuccessPopup && (
+        <SuccessPopup
+          message="¡Inicio de sesión exitoso! Redirigiendo..."
+          onClose={() => setShowSuccessPopup(false)}
+        />
+      )}
     </div>
   );
 };

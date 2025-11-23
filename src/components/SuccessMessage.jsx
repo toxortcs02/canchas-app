@@ -11,8 +11,7 @@ const SuccessMessage = ({ message, onClose }) => {
         <h2>{message}</h2>
         {onClose && (
           <button 
-            className="btn-submit" 
-            style={{ marginTop: "20px", width: "auto", padding: "10px 20px" }}
+            className="popup-close-btn"
             onClick={onClose}
           >
             Cerrar
