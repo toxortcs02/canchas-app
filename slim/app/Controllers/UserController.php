@@ -21,9 +21,10 @@ class UserController {
         $tieneMayus = preg_match('/[A-Z]/', $password);
         $tieneMinus = preg_match('/[a-z]/', $password);
         $tieneNumero = preg_match('/[0-9]/', $password);
-        $tieneEspecial = preg_match('/[@$!%*?&]/', $password);
+        $tieneEspecial = preg_match('/[^a-zA-Z0-9]/', $password); // cualquier caracter no alfanumérico
         return $tieneMayus && $tieneMinus && $tieneNumero && $tieneEspecial;
     }
+
 
     private function jsonResponse(Response $response, array $data, int $status): Response {
         $response->getBody()->write(json_encode($data));
