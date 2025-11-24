@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { generateTimeSlots } from '../../utils/helpers';
 import DateNavigation from '../../components/DateNavigation.jsx';
+import EditParticipantsModal from '../../components/EditParticipantsModal.jsx';
 import './HomePage.css';
 import { courtService } from '/src/services/courtService.jsx'; 
 import { bookingService } from '/src/services/bookingService';
 
 const HomePage = () => {
+  const loggedUserId = Number(localStorage.getItem("userId"));
   const timeSlots = generateTimeSlots();
+  
   const [selectedDate, setSelectedDate] = useState(() => {
     const today = new Date();
     const year = today.getFullYear();
@@ -19,6 +22,7 @@ const HomePage = () => {
   const [courts, setCourts] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedBooking, setSelectedBooking] = useState(null);
 
   // Formatear Date a string YYYY-MM-DD
   const formatDateForInput = (date) => {
@@ -56,7 +60,7 @@ const HomePage = () => {
       try {
         const data = await courtService.getAllCourts();
         setCourts(Array.isArray(data) ? data : []);
-        console.log('Canchas cargadas:', data);
+
       } catch (error) {
         console.error('Error al cargar canchas:', error);
         setCourts([]);
@@ -68,19 +72,19 @@ const HomePage = () => {
   }, []);
 
   // Cargar reservas cada vez que cambie la fecha
-  useEffect(() => {
-    const fetchBookings = async () => {
-      try {
-        console.log('Cargando reservas para:', selectedDate);
-        const data = await bookingService.getBookingsByDate(selectedDate);
-        setBookings(Array.isArray(data) ? data : []);
-        console.log('Reservas cargadas:', data);
-      } catch (error) {
-        console.error('Error al cargar reservas:', error);
-        setBookings([]);
-      }
-    };
+  const fetchBookings = async () => {
+    try {
 
+      const data = await bookingService.getBookingsByDate(selectedDate);
+      setBookings(Array.isArray(data) ? data : []);
+
+    } catch (error) {
+      console.error('Error al cargar reservas:', error);
+      setBookings([]);
+    }
+  };
+
+  useEffect(() => {
     if (selectedDate) {
       fetchBookings();
     }
@@ -92,7 +96,6 @@ const HomePage = () => {
       const bookingTime = new Date(booking.booking_datetime);
       const bookingHour = bookingTime.toTimeString().substring(0, 5);
       
-      // Verificar si esta celda es el inicio de la reserva
       if (bookingHour === timeSlot && booking.court_id === courtId) {
         return true;
       }
@@ -107,7 +110,6 @@ const HomePage = () => {
       const bookingStart = new Date(booking.booking_datetime);
       const bookingStartTime = bookingStart.toTimeString().substring(0, 5);
       
-      // Calcular tiempo de fin
       const bookingEnd = new Date(bookingStart.getTime() + (booking.duration_blocks * 30 * 60 * 1000));
       const cellTime = new Date(selectedDate + 'T' + timeSlot + ':00');
       
@@ -117,6 +119,33 @@ const HomePage = () => {
     });
   };
 
+  // 🆕 Handler para click en reserva
+  const handleBookingClick = (booking, court) => {
+    // Verificar que sea el creador
+    if (booking.created_by === loggedUserId) {
+      // Preparar datos para el modal (ya viene todo en booking)
+      const bookingData = {
+        id: booking.id,
+        court_name: booking.court_name,
+        booking_datetime: booking.booking_datetime,
+        participants: booking.participants || []
+      };
+      setSelectedBooking(bookingData);
+    } else {
+      alert("Solo el creador de la reserva puede modificar los participantes");
+    }
+  };
+
+  // 🆕 Cerrar modal
+  const handleCloseModal = () => {
+    setSelectedBooking(null);
+  };
+
+  // 🆕 Callback cuando se actualiza con éxito
+  const handleUpdateSuccess = () => {
+    fetchBookings(); // Recargar reservas
+  };
+
   // Renderizar celda de reserva
   const renderCell = (timeSlot, court) => {
     const booking = getBookingForCell(timeSlot, court.id);
@@ -124,16 +153,21 @@ const HomePage = () => {
     if (booking) {
       // Esta es la celda de inicio de la reserva
       const participants = booking.participants || [];
+      const isOwner = booking.created_by === loggedUserId;
       
       return (
         <td 
           key={`${timeSlot}-${court.id}`} 
-          className="booking-cell occupied clickable"
+          className={`booking-cell occupied ${isOwner ? 'clickable owner' : ''}`}
           rowSpan={booking.duration_blocks}
+          onClick={() => isOwner && handleBookingClick(booking, court)}
+          style={{ cursor: isOwner ? 'pointer' : 'default' }}
+          title={isOwner ? 'Click para editar participantes' : ''}
         >
           <div className="booking-content">
             <div className="booking-creator">
               <strong>{booking.first_name} {booking.last_name}</strong>
+              {isOwner && <span className="owner-badge">✏️</span>}
             </div>
             {participants.length > 0 && (
               <div className="booking-participants">
@@ -148,10 +182,8 @@ const HomePage = () => {
         </td>
       );
     } else if (isCellOccupied(timeSlot, court.id)) {
-      // Esta celda está ocupada por una reserva anterior (no renderizar)
       return null;
     } else {
-      // Celda vacía
       return (
         <td 
           key={`${timeSlot}-${court.id}`} 
@@ -212,6 +244,15 @@ const HomePage = () => {
           </tbody>
         </table>
       </div>
+
+      {/* 🆕 Modal de edición de participantes */}
+      {selectedBooking && (
+        <EditParticipantsModal
+          booking={selectedBooking}
+          onClose={handleCloseModal}
+          onSuccess={handleUpdateSuccess}
+        />
+      )}
     </div>
   );
 };

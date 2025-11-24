@@ -109,7 +109,6 @@ const BookingForm = () => {
       }
 
       isSelect2InitializedRef.current = true;
-      console.log("✅ Select2 inicializado");
     }, 100);
 
     return () => clearTimeout(timer);
@@ -320,7 +319,7 @@ const handleSubmit = async (e) => {
                 }`}
               >
                 <option value="">Selecciona una hora</option>
-                {Array.from({ length: 15 }, (_, i) => {
+                {Array.from({ length: 14 }, (_, i) => {
                   const hour = i + 8;
                   return (
                     <option

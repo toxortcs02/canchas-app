@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { authService } from '/src/services/authService.jsx';
 import { validators } from '/src/utils/validator.js';
 import SuccessPopup from '/src/components/SuccessMessage.jsx';
+import FailedPopup from '/src/components/FailedMessage.jsx'; // 🆕 Agregado
 import './LoginPage.css';
 
 const LoginPage = () => {
@@ -71,23 +72,27 @@ const LoginPage = () => {
       // Mostrar popup de éxito
       setShowSuccessPopup(true);
       
-      // Redirigir después de 1.5 segundos
+      // 🔧 Redirigir después de 1.5 segundos
       setTimeout(() => {
         navigate('/');
-        // Forzar recarga SOLO después de navegar
-        window.location.reload();
+        // 🔧 Usar replace para recargar correctamente
+        window.location.href = '/';
       }, 1500);
       
     } catch (error) {
-      // Establecer mensaje de error según el tipo
-      if (error.response?.status === 401) {
-        setGeneralError('Credenciales incorrectas. Por favor, verifica tu email y contraseña.');
-      } else if (error.response?.status === 404) {
-        setGeneralError('Usuario no encontrado.');
-      } else {
-        setGeneralError('Error al iniciar sesión. Por favor, intenta nuevamente.');
-      }
 
+      // 🔧 Establecer mensaje de error según el tipo
+      let errorMsg = 'Error al iniciar sesión. Por favor, intenta nuevamente.';
+      
+      if (error.response?.status === 401) {
+        errorMsg = 'Credenciales incorrectas. Verifica tu email y contraseña.';
+      } else if (error.response?.status === 404) {
+        errorMsg = 'Usuario no encontrado.';
+      } else if (error.response?.data?.error) {
+        errorMsg = error.response.data.error;
+      }
+      
+      setGeneralError(errorMsg);
       setLoading(false);
     }
   };
@@ -100,14 +105,6 @@ const LoginPage = () => {
           <h1>Iniciar Sesión</h1>
           <p>Accede a tu cuenta para gestionar tus reservas</p>
         </div>
-
-        {/* Alerta de error en el formulario */}
-        {generalError && (
-          <div className="alert alert-error">
-            <span className="alert-icon">⚠️</span>
-            <span>{generalError}</span>
-          </div>
-        )}
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
@@ -167,11 +164,19 @@ const LoginPage = () => {
         </div>
       </div>
 
-      {/* Popup de éxito usando el componente */}
+      {/* Popup de éxito */}
       {showSuccessPopup && (
         <SuccessPopup
           message="¡Inicio de sesión exitoso! Redirigiendo..."
           onClose={() => setShowSuccessPopup(false)}
+        />
+      )}
+
+      {/* 🆕 Popup de error (reemplaza el alert HTML) */}
+      {generalError && (
+        <FailedPopup
+          message={generalError}
+          onClose={() => setGeneralError('')}
         />
       )}
     </div>

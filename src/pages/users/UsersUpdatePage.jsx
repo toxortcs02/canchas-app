@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { authService } from '../../services/authService';
 import { userService } from '../../services/userService';
+import SuccessPopup from "../../components/SuccessMessage.jsx";
+import FailedPopup from "../../components/FailedMessage.jsx";
 import './UsersUpdatePage.css';
 
 const UsersUpdatePage = () => {
@@ -17,13 +19,17 @@ const UsersUpdatePage = () => {
   const [isValid, setIsValid] = useState(false);
   const [loading, setLoading] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
+  
+  // 🆕 Estados para los popups
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Cargar usuario logueado al iniciar
   useEffect(() => {
     const fetchUser = async () => {
       const userId = authService.getCurrentUserId();
       if (!userId) {
-        alert("No hay usuario logueado");
+        setErrorMessage("No hay usuario logueado");
         setLoading(false);
         return;
       }
@@ -36,7 +42,7 @@ const UsersUpdatePage = () => {
         });
       } catch (err) {
         console.error("Error al cargar usuario:", err);
-        alert("No se pudieron cargar los datos del usuario.");
+        setErrorMessage("No se pudieron cargar los datos del usuario");
       } finally {
         setLoading(false);
       }
@@ -93,14 +99,20 @@ const UsersUpdatePage = () => {
       const fullName = `${editForm.first_name} ${editForm.last_name}`;
       localStorage.setItem('name', fullName);
 
-      alert("Usuario actualizado exitosamente");
+      // 🆕 Mostrar mensaje de éxito
+      setSuccessMessage("Usuario actualizado exitosamente");
       
-      // Opcional: recargar la página para actualizar el header
-      window.location.reload();
+      // Recargar después de 2 segundos
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+      
     } catch (err) {
       console.error("Error al actualizar usuario:", err);
       const errorMsg = err.response?.data?.error || "Error al actualizar usuario. Verifica los datos e inténtalo nuevamente.";
-      alert(errorMsg);
+      
+      // 🆕 Mostrar mensaje de error
+      setErrorMessage(errorMsg);
     } finally {
       setSubmitLoading(false);
     }
@@ -176,6 +188,21 @@ const UsersUpdatePage = () => {
           </form>
         </div>
       </main>
+
+      {/* 🆕 Popups de éxito y error */}
+      {successMessage && (
+        <SuccessPopup
+          message={successMessage}
+          onClose={() => setSuccessMessage("")}
+        />
+      )}
+
+      {errorMessage && (
+        <FailedPopup
+          message={errorMessage}
+          onClose={() => setErrorMessage("")}
+        />
+      )}
     </div>
   );
 };

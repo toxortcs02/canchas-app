@@ -72,7 +72,7 @@ const RegisterPage = () => {
     if (!validate()) return;
 
     setLoading(true);
-    console.log("Registrando usuario:", formData);
+
     try {
       await authService.register(
         formData.email,formData.password,

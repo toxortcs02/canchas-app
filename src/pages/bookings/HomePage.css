@@ -242,4 +242,76 @@
   .participant-name {
     font-size: 11px;
   }
+  .booking-cell.clickable.owner {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.booking-cell.clickable.owner:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(143, 228, 74, 0.3);
+  border: 2px solid var(--color-primary);
+}
+
+/* Badge de dueño */
+.owner-badge {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 14px;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.booking-cell.clickable.owner:hover .owner-badge {
+  opacity: 1;
+  animation: wiggle 0.5s ease;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+}
+
+/* Estilo del creador con badge */
+.booking-creator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+/* Participantes */
+.booking-participants {
+  font-size: 13px;
+  color: #666;
+  margin-top: 6px;
+}
+
+.participant-name {
+  padding: 2px 0;
+}
+
+/* Tooltip hover para owner */
+.booking-cell.clickable.owner::after {
+  content: attr(title);
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.booking-cell.clickable.owner:hover::after {
+  opacity: 1;
+}
 }

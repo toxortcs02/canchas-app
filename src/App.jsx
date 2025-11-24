@@ -28,44 +28,84 @@ function App() {
         
         <main className="main-content">
           <Routes>
-            {/* Rutas públicas */}
+            {/* ========================================
+                RUTAS PÚBLICAS (sin protección)
+                ======================================== */}
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/courts" element={<CourtPage />} />
-            <Route path="/forgot-password" element={<ChangePasswordPage />} />
+
+            {/* ========================================
+                RUTAS PROTEGIDAS (requieren login)
+                ======================================== */}
+
+            {/* Cambiar contraseña - PROTEGIDA */}
+            <Route 
+              path="/forgot-password" 
+              element={
+                <ProtectedRoute>
+                  <ChangePasswordPage />
+                </ProtectedRoute>
+              } 
+            />
+
+            {/* Crear reserva - PROTEGIDA */}
+            <Route 
+              path="/booking/new" 
+              element={
+                <ProtectedRoute>
+                  <BookingForm />
+                </ProtectedRoute>
+              } 
+            />
+
+            {/* Editar reserva - PROTEGIDA */}
+            <Route 
+              path="/booking/edit/:id" 
+              element={
+                <ProtectedRoute>
+                  <BookingForm />
+                </ProtectedRoute>
+              } 
+            />
+
+            {/* Editar perfil propio - PROTEGIDA */}
+            <Route 
+              path="/profile/edit" 
+              element={
+                <ProtectedRoute>
+                  <UsersUpdatePage />
+                </ProtectedRoute>
+              } 
+            />
             
-            {/* Rutas protegidas (requieren login) */}
-            <Route path="/booking/new" element={
-              <ProtectedRoute>
-                <BookingForm />
-              </ProtectedRoute>
-            } />
-            <Route path="/booking/edit/:id" element={
-              <ProtectedRoute>
-                <BookingForm />
-              </ProtectedRoute>
-            } />
-            <Route path="/profile/edit" element={
-              <ProtectedRoute>
-                <UsersUpdatePage />
-              </ProtectedRoute>
-            } />
+            {/* ========================================
+                RUTAS DE ADMINISTRADOR
+                ======================================== */}
             
-            {/* Rutas de administrador */}
-            <Route path="/users" element={
-              <ProtectedRoute requireAdmin>
-                <UsersPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/users/edit/:id" element={
-              <ProtectedRoute requireAdmin>
-                <UsersUpdatePage />
-              </ProtectedRoute>
-            } />
+            {/* Listar usuarios - ADMIN */}
+            <Route 
+              path="/users" 
+              element={
+                <ProtectedRoute requireAdmin>
+                  <UsersPage />
+                </ProtectedRoute>
+              } 
+            />
+
+            {/* Editar usuario (admin) - ADMIN */}
+            <Route 
+              path="/users/edit/:id" 
+              element={
+                <ProtectedRoute requireAdmin>
+                  <UsersUpdatePage />
+                </ProtectedRoute>
+              } 
+            />
             
-            {/* Ruta 404 */}
-            <Route path="*" element={<Navigate to="/" />} />
+            {/* Ruta 404: redirigir al login */}
+            <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </main>
         

@@ -34,7 +34,7 @@ const [selectedUserIds, setSelectedUserIds] = useState([]);
       try {
         const data = await userService.getAllUsers();
         setUsers(Array.isArray(data) ? data : []);
-        console.log('usuarios cargados:', data);
+
       } catch (error) {
         console.error('Error al cargar usuarios:', error);
         setUsers([]);
