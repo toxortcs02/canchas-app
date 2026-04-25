@@ -13,6 +13,28 @@ Canchas App es una aplicación web completa para la gestión y reserva de cancha
 - **Participantes**: Gestión de participantes en cada reserva
 - **Validaciones Avanzadas**: Control de conflictos de horario, capacidad y reglas de negocio
 
+
+
+## 📊 Características Técnicas Destacadas
+
+### Frontend
+- **Componentes Reutilizables**: Header, Footer, NavBar, Modales
+- **Gestión de Estado**: localStorage para persistencia de sesión
+- **Responsive Design**: Adaptable a diferentes tamaños de pantalla
+- **UX Optimizada**: Feedback visual, loading states, mensajes de error
+
+### Backend
+- **API RESTful**: Endpoints bien definidos con OpenAPI
+- **Validaciones Robuste**: Lado servidor con mensajes específicos
+- **Transacciones ACID**: Integridad de datos garantizada
+- **Middleware Pattern**: Separación clara de responsabilidades
+
+### Arquitectura
+- **Separación de Capas**: Controllers, Models, Middleware
+- **Inyección de Dependencias**: Constructor injection en controllers
+- **Error Handling**: Try-catch comprehensivo con logging
+- **Código Limpio**: Nombres descriptivos, comentarios, estructura modular
+
 ## 🏗️ Arquitectura y Tecnologías
 
 ### Frontend
@@ -359,24 +381,5 @@ npm run dev
 - **JWT_SECRET**: Clave secreta para tokens JWT
 - **DB_HOST, DB_NAME, DB_USER, DB_PASS**: Configuración de base de datos
 
-## 📊 Características Técnicas Destacadas
-
-### Frontend
-- **Componentes Reutilizables**: Header, Footer, NavBar, Modales
-- **Gestión de Estado**: localStorage para persistencia de sesión
-- **Responsive Design**: Adaptable a diferentes tamaños de pantalla
-- **UX Optimizada**: Feedback visual, loading states, mensajes de error
-
-### Backend
-- **API RESTful**: Endpoints bien definidos con OpenAPI
-- **Validaciones Robuste**: Lado servidor con mensajes específicos
-- **Transacciones ACID**: Integridad de datos garantizada
-- **Middleware Pattern**: Separación clara de responsabilidades
-
-### Arquitectura
-- **Separación de Capas**: Controllers, Models, Middleware
-- **Inyección de Dependencias**: Constructor injection en controllers
-- **Error Handling**: Try-catch comprehensivo con logging
-- **Código Limpio**: Nombres descriptivos, comentarios, estructura modular
 
 Esta aplicación demuestra un dominio sólido de desarrollo full-stack moderno, con énfasis en seguridad, usabilidad y mantenibilidad del código.
