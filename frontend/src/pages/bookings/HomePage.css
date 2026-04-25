@@ -1,0 +1,317 @@
+@import '../../assets/styles/variables.css';
+
+.home-page {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.bookings-header {
+  margin-bottom: 30px;
+}
+
+.bookings-header h1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--color-text-main);
+}
+
+.create-booking-link {
+  margin-top: 20px;
+}
+
+.btn-create-booking {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: var(--color-secondary);
+  color: white;
+  text-decoration: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.btn-create-booking:hover {
+  filter: brightness(0.9);
+  transform: translateY(-1px);
+}
+
+.btn-create-booking:active {
+  transform: translateY(0);
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  font-size: 18px;
+  color: var(--color-text-main);
+}
+
+/* Contenedor de la tabla */
+.bookings-grid-container {
+  overflow-x: auto;
+  overflow-y: visible;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.bookings-grid-container::-webkit-scrollbar {
+  height: 14px;
+}
+
+.bookings-grid-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: var(--radius);
+}
+
+.bookings-grid-container::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: var(--radius);
+}
+
+.bookings-grid-container::-webkit-scrollbar-thumb:hover {
+  filter: brightness(0.9);
+}
+
+/* Tabla de reservas */
+.bookings-grid {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+}
+
+.bookings-grid thead {
+  background-color: var(--color-bg-light);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.bookings-grid th {
+  padding: 14px 16px;
+  text-align: center;
+  font-weight: 600;
+  color: var(--color-text-main);
+  border-bottom: 2px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+}
+
+.bookings-grid th.time-column {
+  min-width: 100px;
+  width: 100px;
+  background-color: var(--color-bg-light);
+  position: sticky;
+  left: 0;
+  z-index: 11;
+}
+
+.bookings-grid th.court-column {
+  min-width: 150px;
+  width: 150px;
+}
+
+.bookings-grid tbody tr {
+  border-bottom: 1px solid var(--color-border);
+  transition: var(--transition);
+}
+
+.bookings-grid tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.bookings-grid td {
+  padding: 12px 16px;
+  border-right: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.bookings-grid td.time-cell {
+  min-width: 100px;
+  width: 100px;
+  font-weight: 600;
+  background-color: var(--color-bg-light);
+  text-align: center;
+  color: var(--color-text-main);
+  position: sticky;
+  left: 0;
+  z-index: 9;
+  border-right: 2px solid var(--color-border);
+}
+
+.bookings-grid td.booking-cell {
+  min-width: 150px;
+  width: 150px;
+  text-align: center;
+  position: relative;
+  background-color: white;
+}
+
+.bookings-grid td.booking-cell.empty {
+  min-height: 50px;
+}
+
+.bookings-grid td.booking-cell.empty:hover {
+  background-color: var(--color-bg-light);
+  cursor: pointer;
+}
+
+.bookings-grid td.booking-cell.occupied {
+  background-color: #6e91d8;
+  border: 2px solid var(--color-primary);
+  padding: 8px;
+}
+
+.bookings-grid td.booking-cell.clickable {
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.bookings-grid td.booking-cell.clickable:hover {
+  background-color: #055a7c;
+  filter: brightness(0.95);
+}
+
+.booking-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+
+.booking-creator {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+.booking-participants {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.participant-name {
+  font-size: 12px;
+  color: #555;
+  padding: 2px 6px;
+  background-color: rgba(255, 255, 255, 0.493);
+  border-radius: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .home-page {
+    padding: 15px;
+  }
+
+  .bookings-header h1 {
+    font-size: 22px;
+  }
+
+  .bookings-grid {
+    font-size: 12px;
+  }
+
+  .bookings-grid th,
+  .bookings-grid td {
+    padding: 8px 10px;
+  }
+
+  .bookings-grid th.time-column,
+  .bookings-grid td.time-cell {
+    min-width: 70px;
+    width: 70px;
+  }
+
+  .bookings-grid th.court-column,
+  .bookings-grid td.booking-cell {
+    min-width: 120px;
+    width: 120px;
+  }
+
+  .booking-creator {
+    font-size: 12px;
+  }
+
+  .participant-name {
+    font-size: 11px;
+  }
+  .booking-cell.clickable.owner {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.booking-cell.clickable.owner:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(143, 228, 74, 0.3);
+  border: 2px solid var(--color-primary);
+}
+
+/* Badge de dueño */
+.owner-badge {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 14px;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.booking-cell.clickable.owner:hover .owner-badge {
+  opacity: 1;
+  animation: wiggle 0.5s ease;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+}
+
+/* Estilo del creador con badge */
+.booking-creator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+/* Participantes */
+.booking-participants {
+  font-size: 13px;
+  color: #666;
+  margin-top: 6px;
+}
+
+.participant-name {
+  padding: 2px 0;
+}
+
+/* Tooltip hover para owner */
+.booking-cell.clickable.owner::after {
+  content: attr(title);
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.booking-cell.clickable.owner:hover::after {
+  opacity: 1;
+}
+}

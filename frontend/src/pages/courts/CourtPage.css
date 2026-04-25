@@ -1,0 +1,244 @@
+/* ============================================
+   PAGE WRAPPER
+============================================ */
+.court-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f3f3f300;
+  font-family: 'Arial', sans-serif;
+}
+
+.court-page .main-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   TITLE + ACTION BUTTONS
+============================================ */
+.court-list h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #222;
+  font-weight: bold;
+}
+
+/* Botón Crear Cancha */
+.admin-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+.btn-primary {
+    background-color: #0084ff !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    padding: 10px 18px;
+}
+
+.btn-create {
+  background: #1a73e8 !important;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-create:hover {
+  background: #155ec0;
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   COURTS GRID
+============================================ */
+.court-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .court-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .court-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   COURT CARD
+============================================ */
+.court-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.court-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+/* Court name y description */
+.court-name {
+  margin: 0 0 0.7rem;
+  color: #1a73e8;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.court-description {
+  color: #222;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.court-description.no-description {
+  color: #999;
+  font-style: italic;
+}
+
+/* ============================================
+   ACTION BUTTONS
+============================================ */
+.actions {
+  margin-top: 1.2rem;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btn-edit,
+.btn-delete {
+  padding: 15px 26px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 0.95rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+/* Editar */
+.btn-edit {
+  background: #0adf03;
+  color: #ffffff;
+}
+
+.btn-edit:hover {
+  background: #136802e0;
+  transform: translateY(-2px);
+}
+
+/* Eliminar */
+.btn-delete {
+  background: #d9534f;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #c64541;
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   MODAL
+============================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal {
+  background: #ffffff !important;
+  padding: 24px;
+  border-radius: 10px;
+  width: 380px;
+  max-width: 90%;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+.modal h3 {
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #000000 !important; 
+}
+
+.modal p {
+  color: #5e5656;
+  margin-bottom: 12px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+/* ============================================
+   BOTONES GENERALES
+============================================ */
+.btn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Hover general */
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+/* Botón cancelar */
+.btn-cancel {
+  background: #c64541 !important;
+  color: #000000 !important;
+  border: 1px solid #aaa;
+}
+
+.btn-cancel:hover {
+  background: #e9e9e9;
+}
+
+/* Botón eliminar */
+.btn-delete {
+  background: #d9534f;
+  color: #fff;
+}
+
+.btn-delete:hover {
+  background: #c64541;
+}

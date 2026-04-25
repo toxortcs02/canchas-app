@@ -1,0 +1,230 @@
+@import '../../assets/styles/variables.css';
+
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9998;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal container */
+.edit-participants-modal {
+  background-color: white;
+  border-radius: var(--radius);
+  padding: 40px;
+  width: 90%;
+  max-width: 550px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalSlideUp 0.4s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  z-index: 9999;
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Header del modal */
+.modal-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.modal-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  font-size: 40px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #7dd32d 100%);
+  box-shadow: 0 5px 20px rgba(143, 228, 74, 0.4);
+}
+
+.modal-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: 8px;
+}
+
+.modal-header p {
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+/* Info de la reserva */
+.booking-info {
+  background: #f8f9fa;
+  border-radius: var(--radius);
+  padding: 15px;
+  margin-bottom: 25px;
+  border-left: 4px solid var(--color-primary);
+}
+
+.booking-info p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: var(--color-text-main);
+}
+
+.booking-info strong {
+  color: var(--color-primary);
+  margin-right: 8px;
+}
+
+/* Form */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color-text-main);
+}
+
+.helper-text {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* Inputs */
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 15px;
+  background: var(--color-bg-light);
+  transition: var(--transition);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background: var(--color-bg-dark);
+  box-shadow: 0 0 0 3px rgba(143, 228, 74, 0.2);
+}
+
+/* Botones del modal */
+.modal-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.btn-cancel,
+.btn-submit {
+  padding: 14px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-cancel {
+  background: #f1f1f1;
+  color: #666;
+}
+
+.btn-cancel:hover {
+  background: #e0e0e0;
+  transform: translateY(-2px);
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #7dd32d 100%);
+  color: var(--color-text-main);
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(143, 228, 74, 0.4);
+}
+
+.btn-submit:disabled,
+.btn-cancel:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Spinner */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+
+.select2-container--open {
+  z-index: 99999 !important;
+}
+
+.select2-dropdown {
+  z-index: 99999 !important;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .edit-participants-modal {
+    padding: 25px;
+    width: 95%;
+  }
+
+  .modal-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-header h2 {
+    font-size: 20px;
+  }
+}

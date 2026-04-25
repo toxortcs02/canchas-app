@@ -1,0 +1,10 @@
+/* Reset básico - los estilos principales están en global.css */
+* {
+  box-sizing: border-box;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

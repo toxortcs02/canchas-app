@@ -1,0 +1,122 @@
+.navbar {
+  background-color: #2c3e50; /* mismo tono que el header */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 70px; /* ajustá según el alto del header */
+  z-index: 90;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.navbar-item {
+  flex: 1; /* 🔹 Cada botón ocupa la misma proporción del ancho */
+  text-align: center;
+}
+
+.nav-link {
+  display: block;
+  padding: 1rem 0;
+  color: #ecf0f1;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-link:hover {
+  background-color: #34495e;
+  border-bottom-color: #3498db;
+  color: #3498db;
+}
+
+.nav-link.active {
+  background-color: #34495e;
+  border-bottom-color: #3498db;
+  color: #3498db;
+}
+
+/* Botón hamburguesa (modo móvil) */
+.navbar-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 1rem;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.navbar-toggle-icon {
+  width: 25px;
+  height: 3px;
+  background-color: #ecf0f1;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    top: 60px;
+  }
+
+  .navbar-toggle {
+    display: flex;
+  }
+
+  .navbar-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #2c3e50;
+    flex-direction: column;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .navbar-menu.active {
+    max-height: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .navbar-item {
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-link {
+    padding: 0.75rem 1.25rem;
+    border-bottom: none;
+    border-left: 2px solid transparent;
+    border-radius: 0;
+    font-size: 0.85rem;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    border-bottom: none;
+    border-left-color: #3498db;
+    background-color: #34495e;
+  }
+}

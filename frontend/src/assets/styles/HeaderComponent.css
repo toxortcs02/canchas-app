@@ -1,0 +1,130 @@
+@import '../styles/variables.css';
+
+.header {
+  background-color: var(--color-bg-dark); /* Marrón tierra */
+  color: var(--color-bg-light); /* Blanco tiza */
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 6px rgba(94, 59, 46, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: var(--transition);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo y título */
+.header-content-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--color-bg-light);
+  gap: 1rem;
+  transition: var(--transition);
+}
+
+.header-logo-link:hover {
+  color: var(--color-primary);
+}
+
+.header-logo {
+  height: 44px;
+  width: auto;
+}
+
+.header-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* Sección derecha */
+.header-content-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-user-section,
+.header-guest-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-username {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-bg-light);
+}
+
+/* Botones */
+.header-btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: var(--transition);
+}
+
+/* Botón login: color secundario (naranja arcilla) */
+.header-btn-login {
+  background-color: var(--color-secondary);
+  color: var(--color-bg-light);
+}
+
+.header-btn-login:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+/* Botón logout: color primario (verde tenis) */
+.header-btn-logout {
+  background-color: var(--color-primary);
+  color: var(--color-text-main);
+}
+
+.header-btn-logout:hover {
+  filter: brightness(0.95);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem;
+  }
+
+  .header-title {
+    font-size: 1.3rem;
+  }
+
+  .header-logo {
+    height: 38px;
+  }
+
+  .header-username {
+    display: none;
+  }
+
+  .header-btn {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.85rem;
+  }
+}

@@ -1,0 +1,12 @@
+:root {
+    --color-primary: #8fe44a;
+    --color-secondary: #C76A3B;
+    --color-bg-light: #F6F6F6;
+    --color-bg-dark: #5E3B2E;
+    --color-text-main: #2E2E2E;
+    --color-text-muted: #555;
+    --color-border: #E2E2E2;
+    --radius: 12px;
+    --transition: 0.2s ease;
+  }
+  

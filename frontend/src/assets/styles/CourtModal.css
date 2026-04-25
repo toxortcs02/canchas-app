@@ -1,0 +1,155 @@
+/* ============================================
+   PAGE WRAPPER
+============================================ */
+.court-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f3f3f300;
+  font-family: 'Arial', sans-serif;
+}
+
+.court-page .main-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   TITLE + ACTION BUTTONS
+============================================ */
+.court-list h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #222;
+  font-weight: bold;
+}
+
+/* Botón Crear Cancha */
+.admin-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.btn-create {
+  background: #1a73e8;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-create:hover {
+  background: #155ec0;
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   COURTS GRID
+============================================ */
+.court-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .court-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .court-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   COURT CARD
+============================================ */
+.court-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.court-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+/* Court name y description */
+.court-name {
+  margin: 0 0 0.7rem;
+  color: #1a73e8;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.court-description {
+  color: #222;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.court-description.no-description {
+  color: #999;
+  font-style: italic;
+}
+
+/* ============================================
+   ACTION BUTTONS (edit/delete)
+============================================ */
+.actions {
+  margin-top: 1.2rem;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btn-edit,
+.btn-delete {
+  padding: 15px 26px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 0.95rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+/* Editar */
+.btn-edit {
+  background: #0adf03;
+  color: #ffffff;
+}
+
+.btn-edit:hover {
+  background: #136802e0;
+  transform: translateY(-2px);
+}
+
+/* Eliminar */
+.btn-delete {
+  background: #d9534f;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #c64541;
+  transform: translateY(-2px);
+}

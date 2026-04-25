@@ -1,0 +1,33 @@
+.btn {
+  width: 150px;
+  padding: 10px 18px;
+  background-color: var(--color-primary);
+  color: white;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btn-edit {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-delete {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-view {
+  background-color: #2196f3;
+  color: white;
+}
+
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
